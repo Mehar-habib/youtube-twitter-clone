@@ -31,7 +31,6 @@ const userSchema = new Schema(
         },
         coverImage: {
             type: String, //cloudinary url
-            required: [true, "Cover image is required"],
         },
         watchHistory: {
             type: mongoose.Schema.Types.ObjectId,
