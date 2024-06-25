@@ -12,7 +12,7 @@ const generateAccessRefreshToken = async (userId) => {
         const accessToken = user.generateAccessToken();
         const refreshToken = user.generateRefreshToken();
         user.refreshToken = refreshToken;
-        await user.save({ validateBeforeSave: true });
+        await user.save({ validateBeforeSave: false });
         return { accessToken, refreshToken };
     } catch (error) {
         throw new ApiError(
@@ -125,7 +125,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
 });
 
 // ! logout controller
-
 const logoutUser = asyncHandler(async (req, res, next) => {
     await User.findByIdAndUpdate(
         req.user._id,
@@ -193,4 +192,28 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 });
 
-export { registerUser, loginUser, logoutUser, refreshAccessToken };
+// ! change password controller
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    const user = await User.findById(req.user?._id);
+
+    const isOldPasswordCorrect = await user.comparePassword(oldPassword);
+    if (!isOldPasswordCorrect) {
+        throw new ApiError(401, "Old password is incorrect");
+    }
+
+    user.password = newPassword;
+    await user.save({ validateBeforeSave: false });
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Password changed successfully"));
+});
+
+export {
+    registerUser,
+    loginUser,
+    logoutUser,
+    refreshAccessToken,
+    changeCurrentPassword,
+};
