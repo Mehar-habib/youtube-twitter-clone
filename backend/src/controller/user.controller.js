@@ -219,6 +219,24 @@ const getCurrentUser = asyncHandler(async (req, res) => {
         );
 });
 
+// ! update user Details controller
+const updateUserDetails = asyncHandler(async (req, res) => {
+    const { fullName, email } = req.body;
+    if (!fullName || !email) {
+        throw new ApiError(400, "All fields are required");
+    }
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        { $set: { fullName, email } },
+        { new: true }
+    ).select("-password -refreshToken");
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, user, "Account details updated successfully")
+        );
+});
+
 export {
     registerUser,
     loginUser,
@@ -226,4 +244,5 @@ export {
     refreshAccessToken,
     changeCurrentPassword,
     getCurrentUser,
+    updateUserDetails,
 };
