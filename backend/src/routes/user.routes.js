@@ -7,6 +7,7 @@ import {
     refreshAccessToken,
     registerUser,
     updateUserAvatar,
+    updateUserCoverImage,
     updateUserDetails,
 } from "../controller/user.controller.js";
 import { upload } from "../middleware/multer.middleware.js";
@@ -33,5 +34,8 @@ router.route("/update-user").post(verifyJWT, updateUserDetails);
 router
     .route("/update-avatar")
     .post(upload.single("avatar"), verifyJWT, updateUserAvatar);
+router
+    .route("/update-coverImage")
+    .post(upload.single("coverImage"), verifyJWT, updateUserCoverImage);
 
 export default router;
