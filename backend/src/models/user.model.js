@@ -26,11 +26,24 @@ const userSchema = new Schema(
             index: true,
         },
         avatar: {
-            type: String,
-            required: [true, "Avatar is required"],
+            public_id: {
+                type: String,
+                required: [true, "Avatar is required"],
+            },
+            url: {
+                type: String,
+                required: [true, "Avatar is required"],
+            },
         },
         coverImage: {
-            type: String, //cloudinary url
+            public_id: {
+                type: String,
+                required: [true, "Avatar is required"],
+            },
+            url: {
+                type: String,
+                required: [true, "Avatar is required"],
+            },
         },
         watchHistory: {
             type: mongoose.Schema.Types.ObjectId,
