@@ -8,11 +8,11 @@ const commentSchema = new Schema(
             required: [true, "Content is required"],
         },
         video: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: "Video",
         },
         owner: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: "User",
         },
     },
