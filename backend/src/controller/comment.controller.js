@@ -108,7 +108,6 @@ const addComment = asyncHandler(async (req, res) => {
 });
 
 // ! update a comment
-
 const updateComment = asyncHandler(async (req, res) => {
     const { commentId } = req.params;
     const { content } = req.body;
@@ -141,4 +140,22 @@ const updateComment = asyncHandler(async (req, res) => {
         );
 });
 
-export { getVideoComments, addComment };
+// ! delete a comment
+const deleteComment = asyncHandler(async (req, res) => {
+    const { commentId } = req.params;
+
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+        throw new ApiError(404, "Comment not found");
+    }
+    if (comment?.owner.toString() !== req.user?._id.toString()) {
+        throw new ApiError(401, "Only comment owner can delete their comment");
+    }
+    await Comment.findByIdAndDelete(commentId);
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Comment deleted successfully"));
+});
+
+export { getVideoComments, addComment, updateComment, deleteComment };
