@@ -1,4 +1,4 @@
-import { isValidObjectId } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import { Subscription } from "../models/subscription.model.js";
@@ -45,4 +45,82 @@ const toggleTSubscription = asyncHandler(async (req, res) => {
         );
 });
 
-export { toggleTSubscription };
+// ! controller to return subscriber list of a channel
+const getUserChannelSubscribers = asyncHandler(async (req, res) => {
+    let { channelId } = req.params;
+    if (!isValidObjectId(channelId)) {
+        throw new ApiError(400, "Invalid channelId");
+    }
+    channelId = new mongoose.Types.ObjectId(channelId);
+    const subscribers = await Subscription.aggregate([
+        {
+            $match: {
+                channel: channelId,
+            },
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "subscriber",
+                foreignField: "_id",
+                as: "subscriber",
+                pipeline: [
+                    {
+                        $lookup: {
+                            from: "subscriptions",
+                            localField: "_id",
+                            foreignField: "channel",
+                            as: "subscribedToSubscriber",
+                        },
+                    },
+                    {
+                        $addFields: {
+                            subscribedToSubscriber: {
+                                $cond: {
+                                    if: {
+                                        $in: [
+                                            channelId,
+                                            "$subscribedToSubscriber.subscriber",
+                                        ],
+                                    },
+                                    then: true,
+                                    else: false,
+                                },
+                            },
+                            subscribersCount: {
+                                $size: "$subscribedToSubscriber",
+                            },
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            $unwind: "$subscriber",
+        },
+        {
+            $project: {
+                _id: 0,
+                subscriber: {
+                    _id: 1,
+                    username: 1,
+                    fullName: 1,
+                    "avatar.url": 1,
+                    subscribersCount: 1,
+                    subscribedToSubscriber: 1,
+                },
+            },
+        },
+    ]);
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                subscribers,
+                "Subscribers fetched successfully"
+            )
+        );
+});
+
+export { toggleTSubscription, getUserChannelSubscribers };
