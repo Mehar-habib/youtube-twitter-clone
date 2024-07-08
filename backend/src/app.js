@@ -7,6 +7,7 @@ import likeRouter from "./routes/like.routes.js";
 import subscriptionRouter from "./routes/subscription.routes.js";
 import tweetRouter from "./routes/tweet.routes.js";
 import videoRouter from "./routes/video.routes.js";
+import healthRouter from "./routes/healthcheck.routes.js";
 
 const app = new express();
 app.use(
@@ -28,5 +29,6 @@ app.use("/api/v1/likes", likeRouter);
 app.use("/api/v1/subscriptions", subscriptionRouter);
 app.use("/api/v1/tweet", tweetRouter);
 app.use("/api/v1/video", videoRouter);
+app.use("/api/v1/healthcheck", healthRouter);
 
 export default app;
