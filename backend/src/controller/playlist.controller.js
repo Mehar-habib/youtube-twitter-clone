@@ -1,4 +1,5 @@
 import { Playlist } from "../models/playlist.model.js";
+import { Video } from "../models/video.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandle.js";
@@ -92,4 +93,53 @@ const deletePlaylist = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, {}, "Playlist deleted successfully"));
 });
 
-export { createPlaylist, updatePlaylist, deletePlaylist };
+// ! add video to playlist
+const addVideoToPlaylist = asyncHandler(async (req, res) => {
+    const { playlistId, videoId } = req.params;
+
+    if (!isValidObjectId(playlistId) || !isValidObjectId(videoId)) {
+        throw new ApiError(400, "Invalid playlist or video id");
+    }
+
+    const playlist = await Playlist.findById(playlistId);
+    const video = await Video.findById(videoId);
+
+    if (!playlist || !video) {
+        throw new ApiError(400, "Playlist or video not found");
+    }
+
+    if (
+        (playlist.owner?.toString() && video.owner.toString()) !==
+        req.user?._id.toString()
+    ) {
+        throw new ApiError(
+            400,
+            "You are not authorized to add this video to this playlist"
+        );
+    }
+
+    const updatedPlaylist = await Playlist.findByIdAndUpdate(
+        playlist?._id,
+        {
+            $addToSet: {
+                videos: videoId,
+            },
+        },
+        { new: true }
+    );
+
+    if (!updatedPlaylist) {
+        throw new ApiError(400, "Failed to add video to playlist");
+    }
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                updatedPlaylist,
+                "Video added to playlist successfully"
+            )
+        );
+});
+
+export { createPlaylist, updatePlaylist, deletePlaylist, addVideoToPlaylist };
