@@ -25,4 +25,49 @@ const createPlaylist = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, playlist, "Playlist created successfully"));
 });
 
-export { createPlaylist };
+// ! update playlist
+const updatePlaylist = asyncHandler(async (req, res) => {
+    const { playlistId } = req.params;
+    const { name, description } = req.body;
+
+    if (!name || !description) {
+        throw new ApiError(400, "Name and description are required");
+    }
+    if (!isValidObjectId(playlistId)) {
+        throw new ApiError(400, "Invalid playlist id");
+    }
+    const playlist = await Playlist.findById(playlistId);
+    if (!playlist) {
+        throw new ApiError(400, "Playlist not found");
+    }
+
+    if (playlist?.owner.toString() !== req.user?._id.toString()) {
+        throw new ApiError(
+            400,
+            "You are not authorized to update this playlist"
+        );
+    }
+
+    const updatedPlaylist = await Playlist.findByIdAndUpdate(
+        playlist?._id,
+        {
+            $set: {
+                name,
+                description,
+            },
+        },
+        { new: true }
+    );
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                updatedPlaylist,
+                "Playlist updated successfully"
+            )
+        );
+});
+
+export { createPlaylist, updatePlaylist };
