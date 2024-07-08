@@ -142,4 +142,54 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
         );
 });
 
-export { createPlaylist, updatePlaylist, deletePlaylist, addVideoToPlaylist };
+// ! remove video from playlist
+const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
+    const { playlistId, videoId } = req.params;
+    if (!isValidObjectId(playlistId) || !isValidObjectId(videoId)) {
+        throw new ApiError(400, "Invalid playlist or video id");
+    }
+
+    const playlist = await Playlist.findById(playlistId);
+    const video = await Video.findById(videoId);
+    if (!playlist || !video) {
+        throw new ApiError(400, "Playlist or video not found");
+    }
+
+    if (
+        (playlist.owner?.toString() && video.owner.toString()) !==
+        req.user?._id.toString()
+    ) {
+        throw new ApiError(
+            400,
+            "You are not authorized to remove this video from this playlist"
+        );
+    }
+
+    const updatedPlaylist = await Playlist.findByIdAndUpdate(
+        playlistId,
+        {
+            $pull: {
+                videos: videoId,
+            },
+        },
+        { new: true }
+    );
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                updatedPlaylist,
+                "Video removed from playlist successfully"
+            )
+        );
+});
+
+export {
+    createPlaylist,
+    updatePlaylist,
+    deletePlaylist,
+    addVideoToPlaylist,
+    removeVideoFromPlaylist,
+};
