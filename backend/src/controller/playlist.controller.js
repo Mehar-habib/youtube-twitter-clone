@@ -1,3 +1,4 @@
+import mongoose, { isValidObjectId } from "mongoose";
 import { Playlist } from "../models/playlist.model.js";
 import { Video } from "../models/video.model.js";
 import ApiError from "../utils/ApiError.js";
@@ -186,10 +187,99 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
         );
 });
 
+// ! get playlist by id
+const getPlaylistById = asyncHandler(async (req, res) => {
+    const { playlistId } = req.params;
+    if (!isValidObjectId(playlistId)) {
+        throw new ApiError(400, "Invalid playlist id");
+    }
+
+    const playlist = await Playlist.findById(playlistId);
+    if (!playlist) {
+        throw new ApiError(400, "Playlist not found");
+    }
+    const playlistVideos = await Playlist.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(playlistId),
+            },
+        },
+        {
+            $lookup: {
+                from: "videos",
+                localField: "videos",
+                foreignField: "_id",
+                as: "videos",
+            },
+        },
+        {
+            $match: {
+                "videos.isPublished": true,
+            },
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "owner",
+                foreignField: "_id",
+                as: "owner",
+            },
+        },
+        {
+            $addFields: {
+                totalVideos: {
+                    $size: "$videos",
+                },
+                totalViews: {
+                    $sum: "$videos.views",
+                },
+                owner: {
+                    $first: "owner",
+                },
+            },
+        },
+        {
+            $project: {
+                name: 1,
+                description: 1,
+                createdAt: 1,
+                updatedAt: 1,
+                totalVideos: 1,
+                totalViews: {
+                    _id: 1,
+                    "videoFile.url": 1,
+                    "thumbnail.url": 1,
+                    title: 1,
+                    description: 1,
+                    duration: 1,
+                    createdAt: 1,
+                    views: 1,
+                },
+                owner: {
+                    username: 1,
+                    fullName: 1,
+                    "avatar.url": 1,
+                },
+            },
+        },
+    ]);
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                playlistVideos,
+                "Playlist fetched successfully"
+            )
+        );
+});
+
 export {
     createPlaylist,
     updatePlaylist,
     deletePlaylist,
     addVideoToPlaylist,
     removeVideoFromPlaylist,
+    getPlaylistById,
 };
