@@ -275,6 +275,57 @@ const getPlaylistById = asyncHandler(async (req, res) => {
         );
 });
 
+// ! get user playlists
+const getUserPlaylists = asyncHandler(async (req, res) => {
+    const { userId } = req.params;
+
+    if (!isValidObjectId(userId)) {
+        throw new ApiError(400, "Invalid user id");
+    }
+
+    const playlists = await Playlist.aggregate([
+        {
+            $match: {
+                owner: new mongoose.Types.ObjectId(userId),
+            },
+        },
+        {
+            $lookup: {
+                from: "videos",
+                localField: "videos",
+                foreignField: "_id",
+                as: "videos",
+            },
+        },
+        {
+            $addFields: {
+                totalVideos: {
+                    $size: "$videos",
+                },
+                totalViews: {
+                    $sum: "$videos.views",
+                },
+            },
+        },
+        {
+            $project: {
+                _id: 1,
+                name: 1,
+                description: 1,
+                totalVideos: 1,
+                totalViews: 1,
+                updatedAt: 1,
+            },
+        },
+    ]);
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, playlists, "Playlists fetched successfully")
+        );
+});
+
 export {
     createPlaylist,
     updatePlaylist,
@@ -282,4 +333,5 @@ export {
     addVideoToPlaylist,
     removeVideoFromPlaylist,
     getPlaylistById,
+    getUserPlaylists,
 };
