@@ -53,6 +53,27 @@ const getAllVideos = asyncHandler(async (req, res) => {
     } else {
         pipeline.push({ $sort: { createdAt: -1 } });
     }
+    pipeline.push(
+        {
+            $lookup: {
+                from: "users",
+                localField: "owner",
+                foreignField: "_id",
+                as: "ownerDetails",
+                pipeline: [
+                    {
+                        $project: {
+                            username: 1,
+                            "avatar.url": 1,
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            $unwind: "$ownerDetails",
+        }
+    );
 
     const videoAggregate = Video.aggregate(pipeline);
 
@@ -105,6 +126,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
             public_id: thumbnail.public_id,
         },
         owner: req.user._id,
+        isPublished: true,
     });
 
     const videoUploaded = await Video.findById(video._id);
