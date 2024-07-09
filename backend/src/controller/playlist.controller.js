@@ -269,7 +269,7 @@ const getPlaylistById = asyncHandler(async (req, res) => {
         .json(
             new ApiResponse(
                 200,
-                playlistVideos,
+                playlistVideos[0],
                 "Playlist fetched successfully"
             )
         );
