@@ -112,6 +112,11 @@ const getChannelVideos = asyncHandler(async (req, res) => {
             },
         },
         {
+            $sort: {
+                createdAt: -1,
+            },
+        },
+        {
             $project: {
                 _id: 1,
                 "videoFile.url": 1,

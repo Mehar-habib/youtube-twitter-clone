@@ -19,18 +19,14 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
     if (likedAlready) {
         await Like.findByIdAndDelete(likedAlready?._id);
 
-        return res
-            .status(200)
-            .json(new ApiResponse(200, {}, "Video unliked successfully"));
+        return res.status(200).json(new ApiResponse(200, { isLiked: false }));
     }
     await Like.create({
         video: videoId,
         likedBy: req.user._id,
     });
 
-    return res
-        .status(200)
-        .json(new ApiResponse(200, "Video liked successfully"));
+    return res.status(200).json(new ApiResponse(200, { isLiked: true }));
 });
 
 // ! toggle comment like
@@ -47,17 +43,13 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
     if (likedAlready) {
         await Like.findByIdAndDelete(likedAlready?._id);
 
-        return res
-            .status(200)
-            .json(new ApiResponse(200, {}, "Comment unliked successfully"));
+        return res.status(200).json(new ApiResponse(200, { isLiked: false }));
     }
     await Like.create({
         comment: commentId,
         likedBy: req.user._id,
     });
-    return res
-        .status(200)
-        .json(new ApiResponse(200, "Comment liked successfully"));
+    return res.status(200).json(new ApiResponse(200, { isLiked: true }));
 });
 
 // ! toggle tweet like
@@ -75,15 +67,13 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
         await Like.findByIdAndDelete(likedAlready?._id);
         return res
             .status(200)
-            .json(new ApiResponse(200, "Tweet unliked successfully"));
+            .json(new ApiResponse(200, { tweetId, isLiked: false }));
     }
     await Like.create({
         tweet: tweetId,
         likedBy: req.user._id,
     });
-    return res
-        .status(200)
-        .json(new ApiResponse(200, "Tweet liked successfully"));
+    return res.status(200).json(new ApiResponse(200, { isLiked: true }));
 });
 
 // ! get liked videos

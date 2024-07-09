@@ -79,7 +79,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
     await Tweet.findByIdAndDelete(tweetId);
     return res
         .status(200)
-        .json(new ApiResponse(200, {}, "Tweet deleted successfully"));
+        .json(new ApiResponse(200, { tweetId }, "Tweet deleted successfully"));
 });
 
 const getUserTweets = asyncHandler(async (req, res) => {
@@ -134,6 +134,16 @@ const getUserTweets = asyncHandler(async (req, res) => {
                 ownerDetails: {
                     $first: "$ownerDetails",
                 },
+                isLiked: {
+                    if: { $in: [req.user?._id, "$likeDetails.likedBy"] },
+                    then: true,
+                    else: false,
+                },
+            },
+        },
+        {
+            $sort: {
+                createdAt: -1,
             },
         },
         {
@@ -142,6 +152,7 @@ const getUserTweets = asyncHandler(async (req, res) => {
                 ownerDetails: 1,
                 likesCount: 1,
                 createdAt: 1,
+                isLiked: 1,
             },
         },
     ]);

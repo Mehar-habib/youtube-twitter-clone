@@ -5,6 +5,7 @@ import { Video } from "../models/video.model.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { deleteOnCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 import { User } from "../models/user.model.js";
+import { Like } from "../models/like.model.js";
 
 // !get all videos based on query, sort, pagination
 const getAllVideos = asyncHandler(async (req, res) => {
@@ -126,7 +127,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
             public_id: thumbnail.public_id,
         },
         owner: req.user._id,
-        isPublished: true,
+        isPublished: false,
     });
 
     const videoUploaded = await Video.findById(video._id);
@@ -342,6 +343,11 @@ const deleteVideo = asyncHandler(async (req, res) => {
 
     await deleteOnCloudinary(video?.thumbnail?.public_id);
     await deleteOnCloudinary(video.videoFile.public_id, "video");
+
+    // delete video likes
+    await Like.deleteMany({ video: videoId });
+    // delete video comments
+    await Comment.deleteMany({ video: videoId });
 
     return res
         .status(200)

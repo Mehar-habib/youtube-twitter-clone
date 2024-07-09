@@ -4,6 +4,7 @@ import { Video } from "../models/video.model.js";
 import ApiError from "../utils/ApiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
+import { Like } from "../models/like.model.js";
 
 // ! get all comments for a video
 const getVideoComments = asyncHandler(async (req, res) => {
@@ -52,6 +53,11 @@ const getVideoComments = asyncHandler(async (req, res) => {
                         else: false,
                     },
                 },
+            },
+        },
+        {
+            $sort: {
+                createdAt: -1,
             },
         },
         {
@@ -152,10 +158,16 @@ const deleteComment = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Only comment owner can delete their comment");
     }
     await Comment.findByIdAndDelete(commentId);
+    await Like.deleteMany({
+        comment: commentId,
+        likedBy: req.user,
+    });
 
     return res
         .status(200)
-        .json(new ApiResponse(200, {}, "Comment deleted successfully"));
+        .json(
+            new ApiResponse(200, { commentId }, "Comment deleted successfully")
+        );
 });
 
 export { getVideoComments, addComment, updateComment, deleteComment };
