@@ -5,12 +5,15 @@ import axiosInstance from "../../components/helper/axiosInstance";
 const initialState = {
   status: false,
   userData: null,
+  accessToken: null,
+  refreshToken: null,
 };
 
-const createAccount = createAsyncThunk("user/register", async (data) => {
+export const createAccount = createAsyncThunk("user/register", async (data) => {
   try {
     const res = await axiosInstance.post("users/register", data);
-    toast.success(res.data.data.message);
+    console.log(res.data);
+    toast.success(res.data);
     return res.data.data;
   } catch (error) {
     toast.error(error.response?.data?.message);
@@ -18,22 +21,48 @@ const createAccount = createAsyncThunk("user/register", async (data) => {
   }
 });
 
-const userLogin = createAsyncThunk("user/login", async (data) => {
+export const userLogin = createAsyncThunk("user/login", async (data) => {
   try {
     const res = await axiosInstance.post("users/login", data);
-    toast.success(res.data.data.message);
-    return res.data.data;
+    console.log(res.data);
+    toast.success(res.data);
+    return res.data;
   } catch (error) {
     toast.error(error.response?.data?.message);
     throw error;
   }
 });
 
-const userLogout = createAsyncThunk("user/logout", async () => {
+export const userLogout = createAsyncThunk("user/logout", async () => {
   try {
     const res = await axiosInstance.post("users/logout");
-    toast.success(res.data.data.message);
-    return res.data.data;
+    toast.success(res.data?.message);
+    return res.data;
+  } catch (error) {
+    toast.error(error.response?.data?.message);
+    throw error;
+  }
+});
+
+export const refreshAccessToken = createAsyncThunk(
+  "refreshAccessToken",
+  async (data) => {
+    try {
+      const res = await axiosInstance.post("users/refresh-token", data);
+      toast.success(res.data);
+      return res.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+      throw error;
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(async (data) => {
+  try {
+    const res = await axiosInstance.post("users/change-password", data);
+    toast.success(res.data?.message);
+    return res.data;
   } catch (error) {
     toast.error(error.response?.data?.message);
     throw error;
@@ -43,21 +72,28 @@ const userLogout = createAsyncThunk("user/logout", async () => {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    updateUser: (state, action) => {
-      (state.status = true), (state.userData = action.payload);
-    },
-  },
+  reducers: {},
+
   extraReducer: (builder) => {
-    builder.addCase(createAccount.fulfilled, (state, action) => {
-      state.status = true;
-      state.userData = action.payload;
+    builder.addCase(createAccount.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(createAccount.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(userLogin.pending, (state) => {
+      state.loading = true;
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
+      state.loading = false;
       state.status = true;
       state.userData = action.payload;
     });
+    builder.addCase(userLogout.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(userLogout.fulfilled, (state) => {
+      state.loading = false;
       state.status = false;
       state.userData = null;
     });
