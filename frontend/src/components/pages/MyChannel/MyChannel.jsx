@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import Channel from "../channel/Channel";
+import { Channel } from "../../index.js";
 import { useEffect } from "react";
-import { userChannelProfile } from "../../store/slices/userSlice";
+import { userChannelProfile } from "../../../store/slices/userSlice";
 
 function MyChannel() {
   const dispatch = useDispatch();

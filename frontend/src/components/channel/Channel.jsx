@@ -8,6 +8,7 @@ function Channel({
   fullName,
   subscribersCount,
   subscribedCount,
+  children,
 }) {
   return (
     <>
@@ -89,6 +90,8 @@ function Channel({
             <p className="p-2">Subscribed</p>
           </NavLink>
         </section>
+
+        <section>{children}</section>
       </div>
     </>
   );

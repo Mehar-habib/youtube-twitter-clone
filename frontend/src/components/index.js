@@ -7,6 +7,7 @@ import Search from "./header/Search";
 import Sidebar from "./header/Sidebar";
 import Logo from "./Logo";
 import Channel from "./channel/Channel";
+import VideoList from "./VideoList";
 
 export {
   Button,
@@ -18,4 +19,5 @@ export {
   Sidebar,
   Logo,
   Channel,
+  VideoList,
 };
