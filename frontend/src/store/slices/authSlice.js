@@ -3,10 +3,9 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../components/helper/axiosInstance";
 
 const initialState = {
+  loading: false,
   status: false,
   userData: null,
-  accessToken: null,
-  refreshToken: null,
 };
 
 export const createAccount = createAsyncThunk("user/register", async (data) => {
