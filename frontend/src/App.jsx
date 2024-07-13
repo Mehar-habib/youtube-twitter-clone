@@ -7,6 +7,7 @@ import { Login } from "./components";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getCurrentUser } from "./store/slices/authSlice";
+import MyChannel from "./components/pages/MyChannel";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="" element={<HomePage />} />
+          <Route path="/my-content" element={<MyChannel />}>
+            <Route path="videos" element="" />
+            <Route path="playlists" element="" />
+            <Route path="tweets" element="" />
+            <Route path="subscribed" element="" />
+          </Route>
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>
