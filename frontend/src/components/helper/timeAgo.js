@@ -28,3 +28,10 @@ export function timeAgo(createdAt) {
     return `${Math.round(years)} years ago`;
   }
 }
+
+export function formatDuration(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  return minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+}
