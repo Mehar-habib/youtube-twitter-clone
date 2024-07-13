@@ -1,6 +1,4 @@
 import { useState } from "react";
-// import Search from "./Search";
-// import Button from "../Button";
 import { useSelector } from "react-redux";
 import {
   BiLike,

@@ -3,6 +3,7 @@ import "./App.css";
 import Layout from "./Layout";
 import HomePage from "./components/pages/HomePage";
 import { Toaster } from "react-hot-toast";
+import { Login } from "./components";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="" element={<HomePage />} />
         </Route>
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Toaster
         position="top-right"

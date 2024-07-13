@@ -69,6 +69,11 @@ export const changePassword = createAsyncThunk(async (data) => {
   }
 });
 
+export const getCurrentUser = createAsyncThunk("getCurrentUser", async () => {
+  const response = await axiosInstance.get("users/current-user");
+  return response.data.data;
+});
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -93,6 +98,19 @@ const authSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(userLogout.fulfilled, (state) => {
+      state.loading = false;
+      state.status = false;
+      state.userData = null;
+    });
+    builder.addCase(getCurrentUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.status = true;
+      state.userData = action.payload;
+    });
+    builder.addCase(getCurrentUser.rejected, (state) => {
       state.loading = false;
       state.status = false;
       state.userData = null;
