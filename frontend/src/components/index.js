@@ -6,7 +6,7 @@ import Navbar from "./header/Navbar";
 import Search from "./header/Search";
 import Sidebar from "./header/Sidebar";
 import Logo from "./Logo";
-import Channel from "./channel/Channel";
+import ChannelHeader from "./channel/ChannelHeader";
 import VideoList from "./VideoList";
 
 export {
@@ -18,6 +18,6 @@ export {
   Search,
   Sidebar,
   Logo,
-  Channel,
+  ChannelHeader,
   VideoList,
 };

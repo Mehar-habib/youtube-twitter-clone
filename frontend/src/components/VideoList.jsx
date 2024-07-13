@@ -1,3 +1,5 @@
+import { timeAgo } from "./helper/timeAgo";
+
 function VideoList({
   thumbnail,
   duration,
@@ -13,7 +15,7 @@ function VideoList({
         <div className="relative">
           <img src={thumbnail} className="object-cover" alt="thumbnail" />
           <span className="absolute bottom-2 right-2 rounded-lg text-sm bg-black py-1 px-2">
-            {duration}
+            {Math.floor(duration)}
           </span>
         </div>
 
@@ -26,7 +28,7 @@ function VideoList({
             <h2 className="font-medium">{title}</h2>
             <div className="text-xs space-x-1 text-slate-400">
               <span>{views} Views</span>
-              <span>{createdAt} years ago</span>
+              <span>{timeAgo(createdAt)} years ago</span>
             </div>
             {channelName && (
               <h2 className="text-sm space-x-1 text-sky-200">{channelName}</h2>
