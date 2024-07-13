@@ -1,25 +1,53 @@
 import { useState } from "react";
-import { SlMenu } from "react-icons/sl";
-import { CiSearch } from "react-icons/ci";
-import { BiLike } from "react-icons/bi";
-import { HiOutlineVideoCamera } from "react-icons/hi2";
-import { CiSettings } from "react-icons/ci";
-import { MdOutlineContactSupport } from "react-icons/md";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { IoLogoYoutube } from "react-icons/io5";
-import Search from "./Search";
-import Button from "../Button";
+// import Search from "./Search";
+// import Button from "../Button";
+import { useSelector } from "react-redux";
+import {
+  BiLike,
+  CiSearch,
+  CiSettings,
+  HiOutlineVideoCamera,
+  IoCloseCircleOutline,
+  MdOutlineContactSupport,
+  SlMenu,
+} from "../icons.js";
+import { Button, Logo, Search } from "../index.js";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [toggleMenu, setToggleMenu] = useState(false);
+  const authStatus = useSelector((state) => state.auth.status);
+  const profileImg = useSelector((state) => state.auth.userData?.avatar.url);
+
+  const sidePanelItems = [
+    {
+      icon: <BiLike size={25} />,
+      title: "Liked Videos",
+      url: "/liked-videos",
+    },
+    {
+      icon: <HiOutlineVideoCamera size={25} />,
+      title: "My Content",
+      url: "/my-content",
+    },
+    {
+      icon: <MdOutlineContactSupport size={25} />,
+      title: "Support",
+      url: "/support",
+    },
+    {
+      icon: <CiSettings size={25} />,
+      title: "Settings",
+      url: "/settings",
+    },
+  ];
 
   return (
     <>
       <nav className="w-full bg-[#0e0f0f] flex justify-between items-center p-4 sm:gap-5 gap-2 border-b-2 border-gray-500 sticky top-0 z-50">
         {/* icon */}
         <div className="flex items-center justify-center gap-2 cursor-pointer">
-          <IoLogoYoutube size={35} color="red" />
-          <span className="font-bold text-white">YOUTUBE</span>
+          <Logo />
         </div>
 
         {/* search for large screen */}
@@ -31,14 +59,24 @@ function Navbar() {
           <CiSearch size={30} fontWeight={"bold"} />+
         </div>
         {/* login and sign up buttons */}
-        <div className="space-x-2 sm:block hidden">
-          <Button className="bg-[#222222] border hover:bg-black border-slate-500 sm:px-4 sm:py-4 p-2">
-            Login
-          </Button>
-          <Button className="font-semibold border hover:bg-[#222222] border-slate-500 sm:px-4 sm:py-4">
-            Sign up
-          </Button>
-        </div>
+        {authStatus ? (
+          <div className="w-10 space-x-2 sm:block hidden">
+            <img src={profileImg} alt="Profile-image" className="rounded-lg" />
+          </div>
+        ) : (
+          <div className="space-x-2 sm:block hidden">
+            <Link to={"/login"}>
+              <Button className="bg-[#222222] border hover:bg-black border-slate-500 sm:px-4 sm:py-2 p-2">
+                Login
+              </Button>
+            </Link>
+            <Link to={"/signup"}>
+              <Button className="font-semibold border hover:bg-[#222222] border-slate-500 sm:px-4 sm:py-2">
+                Sign up
+              </Button>
+            </Link>
+          </div>
+        )}
 
         {/* hamburger for small screens */}
         <div className="sm:hidden block">
@@ -52,7 +90,7 @@ function Navbar() {
           <div className="fixed right-0 top-0 text-white flex flex-col border-l h-screen w-5/6 bg-[#0F0F0F] sm:hidden rounded-lg outline-none">
             <div className="w-full border-b h-20 flex items-center mb-2 justify-between px-3">
               <div className="flex items-center gap-2">
-                <IoLogoYoutube size={35} color="red" />
+                <Logo />
                 <span className="text-lg font-bold">YOUTUBE</span>
               </div>
               <IoCloseCircleOutline
@@ -63,32 +101,33 @@ function Navbar() {
 
             <div className="flex flex-col justify-between h-full py-5 px-3">
               <div className=" space-y-5">
-                <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-purple-500">
-                  <BiLike size={25} />
-                  <span className="text-lg">Liked Videos</span>
-                </div>
-                <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-purple-500">
-                  <HiOutlineVideoCamera size={25} />
-                  <span className="text-lg">My Content</span>
-                </div>
-                <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-purple-500">
-                  <MdOutlineContactSupport size={25} />
-                  <span className="text-lg">Support</span>
-                </div>
-                <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-purple-500">
-                  <CiSettings size={25} />
-                  <span className="text-lg">Settings</span>
-                </div>
+                {sidePanelItems.map((item) => (
+                  <Link
+                    to={item.url}
+                    key={item.title}
+                    className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-purple-500"
+                  >
+                    <div>{item.icon}</div>
+                    <span className="text-lg">{item.title}</span>
+                  </Link>
+                ))}
               </div>
 
-              <div className="flex flex-col space-y-5 mb-3">
-                <Button className="bg-[#222222] border hover:bg-white hover:text-black border-slate-500 py-1 px-3">
-                  Login
-                </Button>
-                <Button className="font-semibold border border-slate-500 hover:bg-white hover:text-black py-1 px-3">
-                  Sign up
-                </Button>
-              </div>
+              {!authStatus && (
+                <div className="flex flex-col space-y-5 mb-3">
+                  <Link to={"/login"}>
+                    <Button className="w-full bg-[#222222] border hover:bg-white hover:text-black border-slate-500 py-1 px-3">
+                      Login
+                    </Button>
+                  </Link>
+
+                  <Link to={"/signup"}>
+                    <Button className="w-full font-semibold border hover:bg-white hover:text-black border-slate-500 py-1 px-3">
+                      Sign up
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}
