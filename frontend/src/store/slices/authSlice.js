@@ -9,11 +9,17 @@ const initialState = {
 };
 
 export const createAccount = createAsyncThunk("user/register", async (data) => {
+  const formData = new FormData();
+  formData.append("username", data.username);
+  formData.append("email", data.email);
+  formData.append("fullName", data.fullName);
+  formData.append("password", data.password);
+  formData.append("avatar", data.avatar[0]);
   try {
-    const res = await axiosInstance.post("users/register", data);
+    const res = await axiosInstance.post("users/register", formData);
     console.log(res.data);
-    toast.success(res.data);
-    return res.data.data;
+    toast.success("registered successfully");
+    return res.data;
   } catch (error) {
     toast.error(error.response?.data?.message);
     throw error;
@@ -48,7 +54,7 @@ export const refreshAccessToken = createAsyncThunk(
   async (data) => {
     try {
       const res = await axiosInstance.post("users/refresh-token", data);
-      toast.success(res.data);
+      // toast.success(res.data);
       return res.data;
     } catch (error) {
       toast.error(error.response?.data?.message);

@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getCurrentUser, userLogin } from "../store/slices/authSlice";
 import { Button, Input, Logo } from "./index.js";
+import LoginSkeleton from "../skeleton/LoginSkeleton.jsx";
 
 function Login() {
   const {
@@ -12,6 +13,7 @@ function Login() {
   } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth?.loading);
 
   const submit = async (data) => {
     const isEmail = data.username.includes("@");
@@ -24,6 +26,9 @@ function Login() {
       navigate("/");
     }
   };
+  if (loading) {
+    return <LoginSkeleton />;
+  }
   return (
     <>
       <div className="w-full h-screen p-3 flex justify-center items-start">

@@ -4,14 +4,21 @@ import { useEffect } from "react";
 import { getAllVideos } from "../../store/slices/videoSlice";
 import { Link } from "react-router-dom";
 import VideoList from "../VideoList";
+import HomeSkeleton from "../../skeleton/HomeSkeleton";
 
 function HomePage() {
   const dispatch = useDispatch();
   const videos = useSelector((state) => state.video?.videos?.docs);
+  const loading = useSelector((state) => state.video?.loading);
 
   useEffect(() => {
     dispatch(getAllVideos());
   }, [dispatch]);
+
+  if (loading) {
+    return <HomeSkeleton />;
+  }
+
   return (
     <>
       <Container>
