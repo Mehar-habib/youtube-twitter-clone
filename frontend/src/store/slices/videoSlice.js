@@ -5,7 +5,8 @@ import { BASE_URL } from "../../constants";
 
 const initialState = {
   loading: false,
-  videos: [],
+  video: [],
+  isPublished: null,
 };
 
 export const getAllVideos = createAsyncThunk(
@@ -31,6 +32,81 @@ export const getAllVideos = createAsyncThunk(
   }
 );
 
+export const publishAVideo = createAsyncThunk("publishAVideo", async (data) => {
+  const formData = new FormData();
+  formData.append("title", data.title);
+  formData.append("description", data.description);
+  formData.append("videoFile", data.videoFile);
+  formData.append("thumbnail", data.thumbnail[0]);
+
+  try {
+    const response = await axiosInstance.post("/video", formData);
+    toast.success(response?.data?.message);
+    return response.data.data;
+  } catch (error) {
+    toast.error(error.response?.data?.message);
+    throw error;
+  }
+});
+
+export const updateAVideo = createAsyncThunk("updateAVideo", async (data) => {
+  const formData = new FormData();
+  formData.append("title", data.title);
+  formData.append("description", data.description);
+  formData.append("thumbnail", data.thumbnail[0]);
+
+  try {
+    const response = await axiosInstance.patch(
+      `/video/v/${data._id}`,
+      formData
+    );
+    toast.success(response?.data?.message);
+    return response.data.data;
+  } catch (error) {
+    toast.error(error.response?.data?.message);
+    throw error;
+  }
+});
+
+export const deleteAVideo = createAsyncThunk("deleteAVideo", async (data) => {
+  try {
+    const response = await axiosInstance.delete(`/video/v/${data._id}`);
+    toast.success(response?.data?.message);
+    return response.data.data;
+  } catch (error) {
+    toast.error(error.response?.data?.message);
+    throw error;
+  }
+});
+
+export const getVideoById = createAsyncThunk(
+  "getVideoById",
+  async (videoId) => {
+    try {
+      const response = await axiosInstance.get(`/video/v/${videoId}`);
+      return response.data.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+      throw error;
+    }
+  }
+);
+
+export const togglePublishStatus = createAsyncThunk(
+  "togglePublishStatus",
+  async (videoId) => {
+    try {
+      const response = await axiosInstance.patch(
+        `/video/toggle/publish/${videoId}`
+      );
+      return response.data.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+      throw error;
+    }
+  }
+);
+
 const videSlice = createSlice({
   name: "video",
   initialState,
@@ -43,7 +119,36 @@ const videSlice = createSlice({
 
     builder.addCase(getAllVideos.fulfilled, (state, action) => {
       state.loading = false;
-      state.videos = action.payload;
+      state.video = action.payload;
+    });
+
+    builder.addCase(publishAVideo.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(publishAVideo.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(updateAVideo.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateAVideo.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(deleteAVideo.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteAVideo.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(getVideoById.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getVideoById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.video = action.payload;
+    });
+    builder.addCase(togglePublishStatus.fulfilled, (state, action) => {
+      state.isPublished = action.payload;
     });
   },
 });
