@@ -33,7 +33,6 @@ function HomePage() {
                 createdAt={video.createdAt}
                 views={video.views}
                 channelName={video.ownerDetails?.username}
-                channelId={video.owner}
               />
             </Link>
           ))}

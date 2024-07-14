@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { formatDuration, timeAgo } from "./helper/timeAgo";
 
 function VideoList({
@@ -22,11 +23,13 @@ function VideoList({
 
         <div className="flex items-center py-1 px-2 gap-2">
           {avatar && (
-            <img
-              src={avatar}
-              className="w-10 h-10 rounded-full object-cover"
-              alt="avatar"
-            />
+            <Link to={`/channel/${channelName}`}>
+              <img
+                src={avatar}
+                className="w-10 h-10 rounded-full object-cover"
+                alt="avatar"
+              />
+            </Link>
           )}
 
           <div>

@@ -9,8 +9,10 @@ import {
   RiHome6Line,
   TbUserCheck,
 } from "../icons.js";
+import { useSelector } from "react-redux";
 
 function Sidebar() {
+  const username = useSelector((state) => state.auth.userData?.username);
   const sideBarTopItems = [
     {
       icon: <RiHome6Line size={25} />,
@@ -30,7 +32,7 @@ function Sidebar() {
     {
       icon: <HiOutlineVideoCamera size={25} />,
       title: "My Content",
-      url: "/my-content",
+      url: `/channel/${username}`,
     },
     {
       icon: <IoFolderOutline size={25} />,

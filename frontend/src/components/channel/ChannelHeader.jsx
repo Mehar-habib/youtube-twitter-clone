@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Button } from "../index.js";
 
 function ChannelHeader({
@@ -8,8 +8,14 @@ function ChannelHeader({
   fullName,
   subscribersCount,
   subscribedCount,
-  children,
+  isSubscribed,
 }) {
+  const [toggleSubscribe, setToggleSubscribe] = useState("");
+  if (isSubscribed) {
+    setToggleSubscribe(true);
+  }
+  useEffect(() => {}, [toggleSubscribe]);
+
   return (
     <>
       <div className="w-full h-full text-white">
@@ -47,9 +53,9 @@ function ChannelHeader({
                 </p>
               </div>
             </div>
-            <div>
+            <div onClick={() => setToggleSubscribe((prev) => !prev)}>
               <Button className="border-slate-500 hover:scale-110 transition-all text-black font-bold px-4 py-1 bg-purple-500">
-                Edit
+                {toggleSubscribe ? "Subscribed" : "Subscribe"}
               </Button>
             </div>
           </div>

@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ChannelHeader } from "../../index.js";
 import { useEffect } from "react";
-import { userChannelProfile } from "../../../store/slices/userSlice";
+import { userChannelProfile } from "../../../store/slices/userSlice.js";
 import ChannelNavigate from "../../channel/ChannelNavigate.jsx";
 import { Outlet } from "react-router-dom";
 
-function MyChannel() {
+function Channel() {
   const dispatch = useDispatch();
   const channel = useSelector((state) => state.auth?.userData);
   const profile = useSelector((state) => state.user?.profileData);
@@ -31,4 +31,4 @@ function MyChannel() {
   );
 }
 
-export default MyChannel;
+export default Channel;
