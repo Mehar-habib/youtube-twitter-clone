@@ -31,7 +31,7 @@ export const userLogin = createAsyncThunk("user/login", async (data) => {
     const res = await axiosInstance.post("users/login", data);
     console.log(res.data);
     toast.success(res.data);
-    return res.data;
+    return res.data.user;
   } catch (error) {
     toast.error(error.response?.data?.message);
     throw error;
