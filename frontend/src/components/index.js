@@ -9,6 +9,7 @@ import Logo from "./Logo";
 import ChannelHeader from "./channel/ChannelHeader";
 import VideoList from "./VideoList";
 import SignUp from "./Signup";
+import Tweet from "./Tweet";
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   ChannelHeader,
   VideoList,
   SignUp,
+  Tweet,
 };

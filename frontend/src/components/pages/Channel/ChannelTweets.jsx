@@ -2,9 +2,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserTweets } from "../../../store/slices/tweetSlice";
 import TweetList from "../../tweetList";
+import { Tweet } from "../../index";
 
 function ChannelTweets() {
   const dispatch = useDispatch();
+  const authId = useSelector((state) => state.auth?.userData?._id);
   const userId = useSelector((state) => state.user?.profileData?._id);
   const tweets = useSelector((state) => state.tweet?.tweets);
 
@@ -13,6 +15,7 @@ function ChannelTweets() {
   }, [dispatch, userId]);
   return (
     <>
+      {authId === userId && <Tweet />}
       {tweets?.map((tweet) => (
         <TweetList
           key={tweet?._id}

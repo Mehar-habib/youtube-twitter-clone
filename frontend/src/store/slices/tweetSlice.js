@@ -66,7 +66,12 @@ const tweetSlice = createSlice({
       state.loading = false;
       state.tweets = action.payload;
     });
+    builder.addCase(createTweet.fulfilled, (state, action) => {
+      state.tweets.unshift(action.payload);
+    });
   },
 });
+
+export const { addTweet } = tweetSlice.actions;
 
 export default tweetSlice.reducer;

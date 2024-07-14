@@ -3,10 +3,12 @@ import { ChannelHeader } from "../../index.js";
 import { useEffect } from "react";
 import { userChannelProfile } from "../../../store/slices/userSlice.js";
 import ChannelNavigate from "../../channel/ChannelNavigate.jsx";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 
 function Channel() {
   const dispatch = useDispatch();
+  const { username } = useParams();
+
   const channel = useSelector((state) => state.auth?.userData);
   const profile = useSelector((state) => state.user?.profileData);
 
@@ -25,8 +27,10 @@ function Channel() {
         subscribersCount={profile?.subscribersCount || 0}
         fullName={profile?.fullName}
       />
-      <ChannelNavigate />
-      <Outlet />
+      <ChannelNavigate username={username} />
+      <div className="overflow-y-scroll h-[32rem] sm:h-96 mb-20 sm:mb-0">
+        <Outlet />
+      </div>
     </>
   );
 }

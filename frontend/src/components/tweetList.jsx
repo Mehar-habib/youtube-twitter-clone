@@ -1,21 +1,22 @@
 import { useState } from "react";
-import { BiSolidLike, BiSolidDislike } from "../components/icons";
+import { BiSolidLike, BiSolidDislike } from "./icons";
 import { toggleTweetLike } from "../store/slices/likeSlice";
 import { timeAgo } from "./helper/timeAgo";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-function tweetList({
+function TweetList({
   tweetId,
   avatar,
   username,
   createdAt,
   content,
-  likesCount,
+  likesCount = 0,
   isLiked,
 }) {
   const dispatch = useDispatch();
   const [localIsLiked, setLocalIsLiked] = useState(isLiked);
   const [localLikesCount, setLocalLikesCount] = useState(likesCount);
+  const avatar2 = useSelector((state) => state.user?.profileData?.avatar?.url);
 
   const handleLikeToggle = () => {
     if (localIsLiked) {
@@ -28,9 +29,12 @@ function tweetList({
   };
   return (
     <>
-      <div className="text-white w-full flex borde justify-start items-center sm:gap-5 gap-3 border-b border-slate-600 p-5">
+      <div className="text-white w-full flex justify-start items-center sm:gap-5 gap-3 border-b border-slate-600 p-3 sm:p-5">
         <div className="w-10">
-          <img src={avatar} className="w-10 h-10 object-cover rounded-full" />
+          <img
+            src={avatar || avatar2}
+            className="w-10 h-10 object-cover rounded-full"
+          />
         </div>
         <div className="w-3/4 flex flex-col gap-1 ">
           <div className="flex items-center gap-2">
@@ -57,4 +61,4 @@ function tweetList({
   );
 }
 
-export default tweetList;
+export default TweetList;
