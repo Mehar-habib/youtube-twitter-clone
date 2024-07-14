@@ -66,7 +66,7 @@ function Login() {
               {" "}
               Don&apos;t have an account?{" "}
               <Link
-                to={"/signup"}
+                to={"/signUp"}
                 className="text-purple-500 cursor-pointer hover:opacity-70"
               >
                 Sign up

@@ -3,7 +3,7 @@ import "./App.css";
 import Layout from "./Layout";
 import HomePage from "./components/pages/HomePage";
 import { Toaster } from "react-hot-toast";
-import { Login } from "./components";
+import { Login, SignUp } from "./components";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getCurrentUser } from "./store/slices/authSlice";
@@ -28,6 +28,7 @@ function App() {
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/signUp" element={<SignUp />} />
       </Routes>
       <Toaster
         position="top-right"
