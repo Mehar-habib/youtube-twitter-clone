@@ -8,8 +8,9 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getCurrentUser } from "./store/slices/authSlice";
 import History from "./components/pages/History";
-import Channel from "./components/pages/MyChannel/Channel";
-import ChannelVideos from "./components/pages/MyChannel/ChannelVideos";
+import Channel from "./components/pages/Channel/Channel";
+import ChannelVideos from "./components/pages/Channel/ChannelVideos";
+import ChannelTweets from "./components/pages/Channel/ChannelTweets";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ function App() {
           <Route path="/channel/:username" element={<Channel />}>
             <Route path="videos" element={<ChannelVideos />} />
             <Route path="playlists" element="" />
-            <Route path="tweets" element="" />
+            <Route path="tweets" element={<ChannelTweets />} />
             <Route path="subscribed" element="" />
           </Route>
           <Route path="/history" element={<History />} />
