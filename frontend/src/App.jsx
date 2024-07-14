@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { getCurrentUser } from "./store/slices/authSlice";
 import MyChannel from "./components/pages/MyChannel/MyChannel";
 import MyChannelVideos from "./components/pages/MyChannel/MyChannelVideos";
+import History from "./components/pages/History";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function App() {
             <Route path="tweets" element="" />
             <Route path="subscribed" element="" />
           </Route>
+          <Route path="/history" element={<History />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
