@@ -14,7 +14,7 @@ function MyChannelVideos() {
   });
   return (
     <>
-      <div className="grid lg:grid-cols-3 sm:grid-cols-2 border">
+      <div className="grid lg:grid-cols-3 sm:grid-cols-2">
         {videos?.map((video) => (
           <Link to={`/watch/${video._id}`} key={video._id}>
             <VideoList

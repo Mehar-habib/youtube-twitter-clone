@@ -15,7 +15,14 @@ function ChannelHeader({
       <div className="w-full h-full text-white">
         {/* coverImage section */}
         <section className="w-full">
-          <img src={coverImage} className="sm:h-40 h-28 w-full object-cover" />
+          {coverImage ? (
+            <img
+              src={coverImage}
+              className="sm:h-40 h-28 w-full object-cover"
+            />
+          ) : (
+            <div className="sm:h-40 h-28 w-full border-slate-600 border-b bg-black"></div>
+          )}
         </section>
         {/*channel details section  */}
         <section className=" w-full sm:px-5 p-2 flex sm:flex-row flex-col items-start sm:gap-4">
@@ -23,7 +30,7 @@ function ChannelHeader({
             <div className="relative sm:w-32 w-28 sm:h-32 h-28">
               <img
                 src={avatar}
-                className="rounded-full object-cover absolute sm:bottom-10 bottom-20 outline-none"
+                className="rounded-full sm:w-32 w-28 sm:h-32 h-28 object-cover absolute sm:bottom-10 bottom-20 outline-none"
               />
             </div>
           </div>

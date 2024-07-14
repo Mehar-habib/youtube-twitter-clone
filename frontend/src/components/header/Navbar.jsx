@@ -58,7 +58,7 @@ function Navbar() {
         </div>
         {/* login and sign up buttons */}
         {authStatus ? (
-          <div className="w-10 space-x-2 sm:block hidden">
+          <div className="rounded-full sm:block hidden">
             <img src={profileImg} alt="Profile-image" className="rounded-lg" />
           </div>
         ) : (
