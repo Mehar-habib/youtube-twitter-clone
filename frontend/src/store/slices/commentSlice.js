@@ -29,10 +29,9 @@ export const editAComment = createAsyncThunk(
   "editAComment",
   async ({ commentId, content }) => {
     try {
-      const response = await axiosInstance.patch(
-        `/comment/c/${commentId}`,
-        content
-      );
+      const response = await axiosInstance.patch(`/comment/c/${commentId}`, {
+        content,
+      });
       return response.data.data;
     } catch (error) {
       toast.error(error.response?.data?.error);
@@ -89,6 +88,12 @@ const commentSlice = createSlice({
     builder.addCase(createAComment.fulfilled, (state, action) => {
       state.comments.unshift(action.payload);
       state.totalComments++;
+    });
+    builder.addCase(deleteAComment.fulfilled, (state, action) => {
+      state.comments = state.comments.filter(
+        (comment) => comment._id !== action.payload
+      );
+      state.totalComments--;
     });
   },
 });

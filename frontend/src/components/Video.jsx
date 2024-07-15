@@ -6,7 +6,7 @@ function Video({ src, poster }) {
         poster={poster}
         controls
         playsInline
-        className="sm:h-[68vh] sm:max-w-4xl h-64 w-full object-cover"
+        className="sm:h-[68vh] sm:max-w-4xl h-64 w-full object-contain"
       ></video>
     </>
   );
