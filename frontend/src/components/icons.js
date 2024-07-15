@@ -13,6 +13,8 @@ import { BiSolidLike } from "react-icons/bi";
 import { BiSolidDislike } from "react-icons/bi";
 import { FaPlayCircle } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { RxAvatar } from "react-icons/rx";
+import { FaRegEye, FaRegHeart } from "react-icons/fa";
 
 export {
   IoCloseCircleOutline,
@@ -30,4 +32,7 @@ export {
   BiSolidDislike,
   HiOutlineDotsVertical,
   FaPlayCircle,
+  FaRegEye,
+  RxAvatar,
+  FaRegHeart,
 };
