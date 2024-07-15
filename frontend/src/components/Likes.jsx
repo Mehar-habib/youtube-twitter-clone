@@ -7,7 +7,7 @@ import {
 } from "../store/slices/likeSlice";
 import { BiSolidDislike, BiSolidLike } from "./icons";
 
-function Likes({ isLiked, likeCount, commentId, tweetId, size, videoId }) {
+function Likes({ isLiked, likeCount = 0, commentId, tweetId, size, videoId }) {
   const dispatch = useDispatch();
   const [localIsLiked, setLocalIsLiked] = useState(isLiked);
   const [localLikesCount, setLocalLikesCount] = useState(likeCount);

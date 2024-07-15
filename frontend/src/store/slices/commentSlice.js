@@ -6,6 +6,8 @@ import { BASE_URL } from "../../constants";
 const initialState = {
   loading: false,
   comments: [],
+  totalComments: null,
+  hasNextPage: false,
 };
 
 export const createAComment = createAsyncThunk(
@@ -80,11 +82,13 @@ const commentSlice = createSlice({
     });
     builder.addCase(getVideoComments.fulfilled, (state, action) => {
       state.loading = false;
-      state.comments = action.payload;
+      state.comments = action.payload.docs;
+      state.totalComments = action.payload.totalDocs;
+      state.hasNextPage = action.payload.hasNextPage;
     });
     builder.addCase(createAComment.fulfilled, (state, action) => {
-      state.loading = false;
       state.comments.unshift(action.payload);
+      state.totalComments++;
     });
   },
 });
