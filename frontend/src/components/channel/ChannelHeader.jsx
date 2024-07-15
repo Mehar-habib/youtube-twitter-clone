@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../index.js";
+import { useDispatch } from "react-redux";
+import { toggleSubscription } from "../../store/slices/subscriptionSlice.js";
 
 function ChannelHeader({
   coverImage,
@@ -9,12 +11,22 @@ function ChannelHeader({
   subscribersCount = 0,
   subscribedCount = 0,
   isSubscribed,
+  channelId,
 }) {
-  const [toggleSubscribe, setToggleSubscribe] = useState("");
-  if (isSubscribed) {
-    setToggleSubscribe(true);
-  }
-  useEffect(() => {}, [toggleSubscribe]);
+  const [localIsSubscribed, setLocalIsSubscribed] = useState(isSubscribed);
+  const [localSubscribersCount, setLocalSubscribersCount] =
+    useState(subscribersCount);
+  const dispatch = useDispatch();
+
+  const handleSubscribe = () => {
+    dispatch(toggleSubscription(channelId));
+    setLocalIsSubscribed((prev) => !prev);
+    if (localIsSubscribed) {
+      setLocalSubscribersCount((prev) => prev - 1);
+    } else {
+      setLocalSubscribersCount((prev) => prev + 1);
+    }
+  };
 
   return (
     <>
@@ -46,18 +58,18 @@ function ChannelHeader({
               <h3 className="text-sm text-slate-400">@{fullName}</h3>
               <div className="flex gap-1">
                 <p className="text-xs text-slate-400">
-                  {subscribersCount} subscribers
+                  {localSubscribersCount} subscribers
                 </p>
                 <p className="text-xs text-slate-400">
                   {subscribedCount} subscribed
                 </p>
               </div>
             </div>
-            <div onClick={() => setToggleSubscribe((prev) => !prev)}>
+            <Button onClick={handleSubscribe}>
               <Button className="border-slate-500 hover:scale-110 transition-all text-black font-bold px-4 py-1 bg-purple-500">
-                {toggleSubscribe ? "Subscribed" : "Subscribe"}
+                {localIsSubscribed ? "Subscribed" : "Subscribe"}
               </Button>
-            </div>
+            </Button>
           </div>
         </section>
       </div>

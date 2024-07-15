@@ -18,14 +18,18 @@ function Channel() {
   }, [dispatch, channel]);
   return (
     <>
-      <ChannelHeader
-        username={username}
-        coverImage={channel?.coverImage.url}
-        avatar={channel?.avatar.url}
-        subscribedCount={channel?.subscribedCount}
-        subscribersCount={channel?.subscribersCount}
-        fullName={channel?.fullName}
-      />
+      {channel && (
+        <ChannelHeader
+          username={username}
+          coverImage={channel?.coverImage.url}
+          avatar={channel?.avatar.url}
+          subscribedCount={channel?.subscribedCount}
+          subscribersCount={channel?.subscribersCount}
+          fullName={channel?.fullName}
+          channelId={channel?._id}
+          isSubscribed={channel?.isSubscribed}
+        />
+      )}
       <ChannelNavigate username={username} />
       <div className="overflow-y-scroll h-[32rem] sm:h-96 mb-20 sm:mb-0">
         <Outlet />

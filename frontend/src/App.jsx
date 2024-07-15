@@ -13,6 +13,8 @@ import ChannelVideos from "./components/pages/Channel/ChannelVideos";
 import ChannelTweets from "./components/pages/Channel/ChannelTweets";
 import LikedVideos from "./components/pages/LikedVideos";
 import VideoDetails from "./components/pages/VideoDetails";
+import ChannelSubscribers from "./components/pages/Channel/ChannelSubscribers";
+import MySubscriptions from "./components/pages/MySubscriptions";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,10 +30,11 @@ function App() {
             <Route path="videos" element={<ChannelVideos />} />
             <Route path="playlists" element="" />
             <Route path="tweets" element={<ChannelTweets />} />
-            <Route path="subscribed" element="" />
+            <Route path="subscribed" element={<ChannelSubscribers />} />
           </Route>
           <Route path="/history" element={<History />} />
           <Route path="/liked-videos" element={<LikedVideos />} />
+          <Route path="/subscribers" element={<MySubscriptions />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />

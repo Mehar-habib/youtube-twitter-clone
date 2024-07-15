@@ -17,6 +17,7 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import Likes from "./Likes";
 import Description from "./Description";
 import ChannelNavigate from "./channel/ChannelNavigate";
+import Avatar from "./Avatar";
 
 export {
   Button,
@@ -38,4 +39,5 @@ export {
   Likes,
   Description,
   ChannelNavigate,
+  Avatar,
 };
