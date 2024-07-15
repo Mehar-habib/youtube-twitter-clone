@@ -44,8 +44,7 @@ export const getSubscribedChannels = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      toast.error(error.response?.data?.error);
-      throw error;
+      return error;
     }
   }
 );
@@ -75,7 +74,9 @@ const subscriptionSlice = createSlice({
     });
     builder.addCase(getSubscribedChannels.fulfilled, (state, action) => {
       state.loading = false;
-      state.mySubscriptions = action.payload;
+      state.mySubscriptions = action.payload.filter(
+        (subscription) => subscription?.subscribedChannel?.latestVideo
+      );
     });
   },
 });

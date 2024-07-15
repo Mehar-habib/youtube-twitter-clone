@@ -11,6 +11,7 @@ import { IoFolderOutline } from "react-icons/io5";
 import { RiHome6Line } from "react-icons/ri";
 import { BiSolidLike } from "react-icons/bi";
 import { BiSolidDislike } from "react-icons/bi";
+import { FaPlayCircle } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
 export {
@@ -28,4 +29,5 @@ export {
   BiSolidLike,
   BiSolidDislike,
   HiOutlineDotsVertical,
+  FaPlayCircle,
 };

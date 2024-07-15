@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLikedVideos } from "../../store/slices/likeSlice";
 import HomeSkeleton from "../../skeleton/HomeSkeleton";
 import { Link } from "react-router-dom";
-import { Container, VideoList } from "../index";
+import { Container, NoVideosFound, VideoList } from "../index";
 
 function LikedVideos() {
   const dispatch = useDispatch();
@@ -15,6 +15,9 @@ function LikedVideos() {
   }, [dispatch]);
   if (loading) {
     return <HomeSkeleton />;
+  }
+  if (LikedVideos?.length === 0) {
+    return <NoVideosFound />;
   }
   return (
     <>

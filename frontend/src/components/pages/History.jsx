@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getWatchHistory } from "../../store/slices/userSlice";
 import HomeSkeleton from "../../skeleton/HomeSkeleton";
 import { Link } from "react-router-dom";
-import { Container, VideoList } from "../index";
+import { Container, NoVideosFound, VideoList } from "../index";
 
 function History() {
   const loading = useSelector((state) => state.user?.loading);
@@ -16,6 +16,9 @@ function History() {
 
   if (loading) {
     return <HomeSkeleton />;
+  }
+  if (videos?.length === 0) {
+    return <NoVideosFound />;
   }
   if (videos && videos.length > 0) {
     return (

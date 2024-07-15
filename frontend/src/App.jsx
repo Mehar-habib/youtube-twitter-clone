@@ -34,7 +34,7 @@ function App() {
           </Route>
           <Route path="/history" element={<History />} />
           <Route path="/liked-videos" element={<LikedVideos />} />
-          <Route path="/subscribers" element={<MySubscriptions />} />
+          <Route path="/subscriptions" element={<MySubscriptions />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />

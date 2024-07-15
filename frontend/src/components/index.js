@@ -18,6 +18,7 @@ import Likes from "./Likes";
 import Description from "./Description";
 import ChannelNavigate from "./channel/ChannelNavigate";
 import Avatar from "./Avatar";
+import NoVideosFound from "./NoVideosFound";
 
 export {
   Button,
@@ -40,4 +41,5 @@ export {
   Description,
   ChannelNavigate,
   Avatar,
+  NoVideosFound,
 };
