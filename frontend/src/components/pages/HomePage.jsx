@@ -22,7 +22,7 @@ function HomePage() {
   return (
     <>
       <Container>
-        <div className="sm:h-[90vh] h-[80vh] w-full grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 overflow-y-scroll">
+        <div className="mb-20 sm:mb-0 w-full grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 overflow-y-scroll">
           {videos?.map((video) => (
             <Link to={`/watch/${video._id}`} key={video._id}>
               <VideoList

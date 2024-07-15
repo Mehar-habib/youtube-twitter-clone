@@ -11,6 +11,7 @@ import History from "./components/pages/History";
 import Channel from "./components/pages/Channel/Channel";
 import ChannelVideos from "./components/pages/Channel/ChannelVideos";
 import ChannelTweets from "./components/pages/Channel/ChannelTweets";
+import LikedVideos from "./components/pages/LikedVideos";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
             <Route path="subscribed" element="" />
           </Route>
           <Route path="/history" element={<History />} />
+          <Route path="/liked-videos" element={<LikedVideos />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />

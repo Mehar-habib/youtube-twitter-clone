@@ -13,9 +13,9 @@ function VideoList({
 }) {
   return (
     <>
-      <div className="w-full p-2">
+      <div className="w-full sm:p-2">
         <div className="relative">
-          <img src={thumbnail} className="object-cover" alt="thumbnail" />
+          <img src={thumbnail} className="w-full h-full" alt="thumbnail" />
           <span className="absolute bottom-2 right-2 rounded-lg text-sm bg-black py-1 px-2">
             {formatDuration(duration)}
           </span>
