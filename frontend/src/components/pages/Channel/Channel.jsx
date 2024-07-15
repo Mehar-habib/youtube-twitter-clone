@@ -10,7 +10,6 @@ function Channel() {
   const { username } = useParams();
 
   const channel = useSelector((state) => state.auth?.userData);
-  const profile = useSelector((state) => state.user?.profileData);
 
   useEffect(() => {
     if (channel) {
@@ -20,12 +19,12 @@ function Channel() {
   return (
     <>
       <ChannelHeader
-        username={channel?.username}
-        coverImage={profile?.coverImage.url}
-        avatar={profile?.avatar.url}
-        subscribedCount={profile?.subscribedCount || 0}
-        subscribersCount={profile?.subscribersCount || 0}
-        fullName={profile?.fullName}
+        username={username}
+        coverImage={channel?.coverImage.url}
+        avatar={channel?.avatar.url}
+        subscribedCount={channel?.subscribedCount}
+        subscribersCount={channel?.subscribersCount}
+        fullName={channel?.fullName}
       />
       <ChannelNavigate username={username} />
       <div className="overflow-y-scroll h-[32rem] sm:h-96 mb-20 sm:mb-0">

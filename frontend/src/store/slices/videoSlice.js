@@ -68,22 +68,27 @@ export const updateAVideo = createAsyncThunk("updateAVideo", async (data) => {
   }
 });
 
-export const deleteAVideo = createAsyncThunk("deleteAVideo", async (data) => {
-  try {
-    const response = await axiosInstance.delete(`/video/v/${data._id}`);
-    toast.success(response?.data?.message);
-    return response.data.data;
-  } catch (error) {
-    toast.error(error.response?.data?.message);
-    throw error;
+export const deleteAVideo = createAsyncThunk(
+  "deleteAVideo",
+  async (videoId) => {
+    try {
+      const response = await axiosInstance.delete(`/video/v/${videoId._id}`);
+      toast.success(response?.data?.message);
+      return response.data.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+      throw error;
+    }
   }
-});
+);
 
 export const getVideoById = createAsyncThunk(
   "getVideoById",
-  async (videoId) => {
+  async ({ videoId, userId }) => {
     try {
-      const response = await axiosInstance.get(`/video/v/${videoId}`);
+      const response = await axiosInstance.get(`/video/v/${videoId}`, {
+        userId,
+      });
       return response.data.data;
     } catch (error) {
       toast.error(error.response?.data?.message);
