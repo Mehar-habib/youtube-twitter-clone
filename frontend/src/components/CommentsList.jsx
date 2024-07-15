@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { timeAgo } from "./helper/timeAgo";
-import Likes from "./Likes";
+import { Likes, Edit, DeleteConfirmation } from "./index";
 import { useState } from "react";
 import { deleteAComment, editAComment } from "../store/slices/commentSlice";
 import { HiOutlineDotsVertical } from "./icons";
-import EditComment from "./EditComment";
-import DeleteConfirmation from "./DeleteConfirmation";
 
 function CommentsList({
   avatar,
@@ -14,7 +12,7 @@ function CommentsList({
   content,
   commentId,
   isLiked,
-  likeCount,
+  likesCount,
 }) {
   const avatar2 = useSelector((state) => state.auth?.userData?.avatar.url);
   const authUsername = useSelector((state) => state.auth?.userData?.username);
@@ -24,24 +22,27 @@ function CommentsList({
     editing: false,
     editedContent: content,
     isOpen: false,
-    deleteConfirm: false,
+    delete: false,
   });
 
-  const handleEditComment = () => {
-    dispatch(
-      editAComment({ commentId, editedContent: editState.editedContent })
-    );
+  const handleEditComment = (editedContent) => {
+    console.log(editedContent);
+    dispatch(editAComment({ commentId, content: editedContent }));
     setEditState((prevState) => ({
       ...prevState,
       editing: false,
+      editedContent,
       isOpen: false,
       delete: false,
     }));
   };
 
   const handleDeleteComment = () => {
-    dispatch(deleteAComment({ commentId }));
-    setEditState((prevState) => ({ ...prevState, delete: false }));
+    dispatch(deleteAComment(commentId));
+    setEditState((prevState) => ({
+      ...prevState,
+      delete: false,
+    }));
   };
 
   return (
@@ -58,13 +59,13 @@ function CommentsList({
             <h2 className="text-xs">{username}</h2>
             <span className="text-xs text-slate-400">{timeAgo(createdAt)}</span>
           </div>
-          <p className="text-sm">{content}</p>
-          {/* dropdown for edit and delete comment */}
+
+          {/*dropdown for edit and delete comment */}
           {authUsername === username && (
             <div className="absolute right-0">
               <div className="relative">
                 <HiOutlineDotsVertical
-                  className="cursor-pointer"
+                  className="text-white cursor-pointer"
                   onClick={() =>
                     setEditState((prevState) => ({
                       ...prevState,
@@ -74,7 +75,7 @@ function CommentsList({
                 />
 
                 {editState.isOpen && (
-                  <div className="border bg-[#222222] text-lg border-sky-700 absolute text-center right-2 rounded-xl">
+                  <div className="border bg-[#222222] text-lg border-slate-600 absolute text-center right-2 rounded-xl">
                     <ul>
                       <li
                         className="hover:opacity-50 px-5 cursor-pointer border-b border-slate-600"
@@ -107,26 +108,25 @@ function CommentsList({
             </div>
           )}
 
-          {/* Delete confirm popup */}
+          {/* Delete Confirm popup */}
           {editState.delete && (
-            <div className="absolute right-[20%] top-[50%] z-50">
-              <DeleteConfirmation
-                onCancel={() =>
-                  setEditState((prevState) => ({
-                    ...prevState,
-                    delete: false,
-                    isOpen: false,
-                  }))
-                }
-              />
+            <DeleteConfirmation
+              onCancel={() =>
+                setEditState((prevState) => ({
+                  ...prevState,
+                  delete: false,
+                  isOpen: false,
+                }))
+              }
               onDelete={handleDeleteComment}
-            </div>
+              comment={true}
+            />
           )}
 
           {/* edit comment */}
-          {editState.editing && (
-            <EditComment
-              initialContent={content}
+          {editState.editing ? (
+            <Edit
+              initialContent={editState.editedContent}
               onCancel={() =>
                 setEditState((prevState) => ({
                   ...prevState,
@@ -136,10 +136,14 @@ function CommentsList({
               }
               onSave={handleEditComment}
             />
+          ) : (
+            editState.editedContent
           )}
+
+          {/* Like for comments */}
           <Likes
             isLiked={isLiked}
-            likeCount={likeCount}
+            likesCount={likesCount}
             commentId={commentId}
             size={17}
           />

@@ -2,9 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleSubscription } from "../store/slices/subscriptionSlice";
 import { timeAgo } from "./helper/timeAgo";
-import Likes from "./Likes";
 import { Link } from "react-router-dom";
-import { Button } from "./index";
+import { Likes, Button } from "./index";
 
 function Description({
   title,

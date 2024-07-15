@@ -12,6 +12,11 @@ import SignUp from "./Signup";
 import TweetAndComment from "./TweetAndComment";
 import Video from "./Video";
 import CommentList from "./CommentsList";
+import Edit from "./Edit";
+import DeleteConfirmation from "./DeleteConfirmation";
+import Likes from "./Likes";
+import Description from "./Description";
+import ChannelNavigate from "./channel/ChannelNavigate";
 
 export {
   Button,
@@ -28,4 +33,9 @@ export {
   TweetAndComment,
   Video,
   CommentList,
+  Edit,
+  DeleteConfirmation,
+  Likes,
+  Description,
+  ChannelNavigate,
 };
