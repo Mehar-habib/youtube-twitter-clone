@@ -1,4 +1,4 @@
-function DeleteConfirmation({ onCancel, onDelete, comment, tweet }) {
+function DeleteConfirmation({ onCancel, onDelete, comment, tweet, video }) {
   return (
     <>
       <div className="text-center space-y-2 sm:p-5 p-3 bg-black border-slate-700 border rounded-xl">

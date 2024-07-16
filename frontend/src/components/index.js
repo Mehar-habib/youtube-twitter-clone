@@ -25,6 +25,9 @@ import UploadingVideo from "./UploadingVideo";
 import UploadVideo from "./UploadVideo";
 import TogglePublish from "./TogglePublish";
 import EditVideo from "./EditVideo";
+import HeaderSection from "./dashboard/HeaderSection";
+import StatsSection from "./dashboard/StatsSection";
+import VideoTable from "./dashboard/VideoTable";
 
 export {
   Button,
@@ -54,4 +57,7 @@ export {
   UploadVideo,
   TogglePublish,
   EditVideo,
+  HeaderSection,
+  StatsSection,
+  VideoTable,
 };
