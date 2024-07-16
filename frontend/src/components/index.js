@@ -23,6 +23,8 @@ import Input2 from "./Input2";
 import Spinner from "./Spinner";
 import UploadingVideo from "./UploadingVideo";
 import UploadVideo from "./UploadVideo";
+import TogglePublish from "./TogglePublish";
+import EditVideo from "./EditVideo";
 
 export {
   Button,
@@ -50,4 +52,6 @@ export {
   Spinner,
   UploadingVideo,
   UploadVideo,
+  TogglePublish,
+  EditVideo,
 };

@@ -5,10 +5,11 @@ import { BASE_URL } from "../../constants";
 
 const initialState = {
   loading: false,
-  videos: [],
-  isPublished: null,
+  videos: null,
   uploading: true,
   uploaded: false,
+  video: null,
+  publishToggled: false,
 };
 
 export const getAllVideos = createAsyncThunk(
@@ -51,24 +52,27 @@ export const publishAVideo = createAsyncThunk("publishAVideo", async (data) => {
   }
 });
 
-export const updateAVideo = createAsyncThunk("updateAVideo", async (data) => {
-  const formData = new FormData();
-  formData.append("title", data.title);
-  formData.append("description", data.description);
-  formData.append("thumbnail", data.thumbnail[0]);
+export const updateAVideo = createAsyncThunk(
+  "updateAVideo",
+  async ({ videoId, data }) => {
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("thumbnail", data.thumbnail[0]);
 
-  try {
-    const response = await axiosInstance.patch(
-      `/video/v/${data._id}`,
-      formData
-    );
-    toast.success(response?.data?.message);
-    return response.data.data;
-  } catch (error) {
-    toast.error(error.response?.data?.message);
-    throw error;
+    try {
+      const response = await axiosInstance.patch(
+        `/video/v/${videoId}`,
+        formData
+      );
+      toast.success(response?.data?.message);
+      return response.data.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+      throw error;
+    }
   }
-});
+);
 
 export const deleteAVideo = createAsyncThunk(
   "deleteAVideo",
@@ -144,9 +148,12 @@ const videSlice = createSlice({
     });
     builder.addCase(updateAVideo.pending, (state) => {
       state.loading = true;
+      state.uploaded = true;
     });
     builder.addCase(updateAVideo.fulfilled, (state) => {
       state.loading = false;
+      state.uploaded = true;
+      state.uploading = false;
     });
     builder.addCase(deleteAVideo.pending, (state) => {
       state.loading = true;
@@ -161,8 +168,8 @@ const videSlice = createSlice({
       state.loading = false;
       state.videos = action.payload;
     });
-    builder.addCase(togglePublishStatus.fulfilled, (state, action) => {
-      state.isPublished = action.payload;
+    builder.addCase(togglePublishStatus.fulfilled, (state) => {
+      state.publishToggled = !state.publishToggled;
     });
   },
 });

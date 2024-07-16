@@ -1,7 +1,10 @@
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { BiLike } from "react-icons/bi";
 import { HiOutlineVideoCamera } from "react-icons/hi2";
-import { MdOutlineContactSupport } from "react-icons/md";
+import {
+  MdOutlineContactSupport,
+  MdOutlineSlowMotionVideo,
+} from "react-icons/md";
 import { CiSettings } from "react-icons/ci";
 import { CiSearch } from "react-icons/ci";
 import { SlMenu } from "react-icons/sl";
@@ -16,8 +19,9 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RxAvatar } from "react-icons/rx";
 import { FaRegEye, FaRegHeart } from "react-icons/fa";
 import { PiFilmReelFill } from "react-icons/pi";
-import { MdOutlineSlowMotionVideo } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
+import { ImBin } from "react-icons/im";
+import { GrEdit } from "react-icons/gr";
 
 export {
   IoCloseCircleOutline,
@@ -41,4 +45,6 @@ export {
   PiFilmReelFill,
   MdOutlineSlowMotionVideo,
   TiTick,
+  ImBin,
+  GrEdit,
 };
