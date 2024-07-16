@@ -5,9 +5,10 @@ import { BASE_URL } from "../../constants";
 
 const initialState = {
   loading: false,
-  video: [],
+  videos: [],
   isPublished: null,
   uploading: true,
+  uploaded: false,
 };
 
 export const getAllVideos = createAsyncThunk(
@@ -116,7 +117,12 @@ export const togglePublishStatus = createAsyncThunk(
 const videSlice = createSlice({
   name: "video",
   initialState,
-  reducers: {},
+  reducers: {
+    updateUploadState: (state) => {
+      state.uploading = false;
+      state.uploaded = false;
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getAllVideos.pending, (state) => {
@@ -125,7 +131,7 @@ const videSlice = createSlice({
 
     builder.addCase(getAllVideos.fulfilled, (state, action) => {
       state.loading = false;
-      state.video = action.payload;
+      state.videos = action.payload;
     });
 
     builder.addCase(publishAVideo.pending, (state) => {
@@ -133,8 +139,8 @@ const videSlice = createSlice({
       state.uploading = true;
     });
     builder.addCase(publishAVideo.fulfilled, (state) => {
-      state.loading = false;
       state.uploading = false;
+      state.uploaded = true;
     });
     builder.addCase(updateAVideo.pending, (state) => {
       state.loading = true;
@@ -153,12 +159,12 @@ const videSlice = createSlice({
     });
     builder.addCase(getVideoById.fulfilled, (state, action) => {
       state.loading = false;
-      state.video = action.payload;
+      state.videos = action.payload;
     });
     builder.addCase(togglePublishStatus.fulfilled, (state, action) => {
       state.isPublished = action.payload;
     });
   },
 });
-
+export const { updateUploadState } = videSlice.actions;
 export default videSlice.reducer;

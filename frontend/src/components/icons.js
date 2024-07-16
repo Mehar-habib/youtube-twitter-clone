@@ -17,6 +17,7 @@ import { RxAvatar } from "react-icons/rx";
 import { FaRegEye, FaRegHeart } from "react-icons/fa";
 import { PiFilmReelFill } from "react-icons/pi";
 import { MdOutlineSlowMotionVideo } from "react-icons/md";
+import { TiTick } from "react-icons/ti";
 
 export {
   IoCloseCircleOutline,
@@ -39,4 +40,5 @@ export {
   FaRegHeart,
   PiFilmReelFill,
   MdOutlineSlowMotionVideo,
+  TiTick,
 };
