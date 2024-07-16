@@ -19,6 +19,10 @@ import Description from "./Description";
 import ChannelNavigate from "./channel/ChannelNavigate";
 import Avatar from "./Avatar";
 import NoVideosFound from "./NoVideosFound";
+import Input2 from "./Input2";
+import Spinner from "./Spinner";
+import UploadingVideo from "./UploadingVideo";
+import UploadVideo from "./UploadVideo";
 
 export {
   Button,
@@ -42,4 +46,8 @@ export {
   ChannelNavigate,
   Avatar,
   NoVideosFound,
+  Input2,
+  Spinner,
+  UploadingVideo,
+  UploadVideo,
 };

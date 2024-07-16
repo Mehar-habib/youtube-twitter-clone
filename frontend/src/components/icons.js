@@ -15,6 +15,8 @@ import { FaPlayCircle } from "react-icons/fa";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RxAvatar } from "react-icons/rx";
 import { FaRegEye, FaRegHeart } from "react-icons/fa";
+import { PiFilmReelFill } from "react-icons/pi";
+import { MdOutlineSlowMotionVideo } from "react-icons/md";
 
 export {
   IoCloseCircleOutline,
@@ -35,4 +37,6 @@ export {
   FaRegEye,
   RxAvatar,
   FaRegHeart,
+  PiFilmReelFill,
+  MdOutlineSlowMotionVideo,
 };
