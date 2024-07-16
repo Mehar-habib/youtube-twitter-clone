@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { updateAVideo } from "../store/slices/videoSlice";
+import { updateAVideo, updateUploadState } from "../store/slices/videoSlice";
 import { useEffect } from "react";
 import { Button, Input2, Spinner } from "./index";
 import { IoCloseCircleOutline } from "./icons";
@@ -14,20 +14,22 @@ function EditVideo({ videoId, title, description, setEditVideoPopup }) {
   } = useForm();
   const dispatch = useDispatch();
   const uploading = useSelector((state) => state.video.uploading);
-  const uploaded = useSelector((state) => state.video.uploaded);
 
   const handleClosePopup = () => {
     setEditVideoPopup((prev) => ({
       ...prev,
+      uploadVideo: false,
       editVideo: false,
     }));
   };
   const updateVideo = async (data) => {
-    await dispatch(updateAVideo({ videoId, data }));
+    dispatch(updateAVideo({ videoId, data }));
     setEditVideoPopup((prev) => ({
       ...prev,
+      uploadVideo: false,
       editVideo: false,
     }));
+    dispatch(updateUploadState());
   };
 
   useEffect(() => {
@@ -40,7 +42,7 @@ function EditVideo({ videoId, title, description, setEditVideoPopup }) {
       <>
         <div className="w-52 border border-slate-600 bg-black flex gap-2 p-3">
           <Spinner />
-          <span className="text-sm font-bold">Updating video...</span>
+          <span className="text-md font-bold">Updating video...</span>
         </div>
       </>
     );
