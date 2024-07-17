@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { formatDuration, timeAgo } from "./helper/timeAgo";
 
 function VideoList({
@@ -10,10 +10,19 @@ function VideoList({
   channelId,
   channelName,
   createdAt,
+  videoId,
 }) {
+  const navigate = useNavigate();
+  const handleAvatarClick = (e) => {
+    e.stopPropagation();
+    navigate(`/channel/${channelName}`);
+  };
   return (
     <>
-      <div className="w-full sm:p-2">
+      <div
+        className="w-full sm:p-2 cursor-pointer"
+        onClick={() => navigate(`/video/${videoId}`)}
+      >
         <div className="relative">
           <img src={thumbnail} className="w-full h-full" alt="thumbnail" />
           <span className="absolute bottom-2 right-2 rounded-lg text-sm bg-black py-1 px-2">
@@ -23,13 +32,13 @@ function VideoList({
 
         <div className="flex items-center py-1 px-2 gap-2">
           {avatar && (
-            <Link to={`/channel/${channelName}`}>
+            <div onClick={handleAvatarClick}>
               <img
                 src={avatar}
                 className="w-10 h-10 rounded-full object-cover"
                 alt="avatar"
               />
-            </Link>
+            </div>
           )}
 
           <div>

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Button } from "../index.js";
+import { Button, EditAvatar } from "../index.js";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSubscription } from "../../store/slices/subscriptionSlice.js";
-import EditAvatar from "../EditAvatar";
 import { Link } from "react-router-dom";
 
 function ChannelHeader({

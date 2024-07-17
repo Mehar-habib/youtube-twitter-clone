@@ -30,6 +30,7 @@ import StatsSection from "./dashboard/StatsSection";
 import VideoTable from "./dashboard/VideoTable";
 import ChangePassword from "./ChangePassword";
 import EditPersonalInfo from "./EditPersonalInfo";
+import EditAvatar from "./EditAvatar";
 
 export {
   Button,
@@ -64,4 +65,5 @@ export {
   VideoTable,
   ChangePassword,
   EditPersonalInfo,
+  EditAvatar,
 };

@@ -16,14 +16,15 @@ function MySubscriptions() {
       dispatch(getSubscribedChannels(subscriberId));
     }
   }, [dispatch, subscriberId]);
+
+  window.scrollTo(0, 0);
   return (
     <>
       <div className="flex gap-2 p-2 text-white items-center bg-[#222222]">
         {subscriptions?.map((subscription) => (
           <div
-            to={`/channel/${subscription?.subscribedChannel?.username}`}
             key={subscription?.subscribedChannel?._id}
-            className="flex flex-col justify-center items-center"
+            className="flex flex-col overflow-x-scroll items-center"
           >
             <Avatar
               src={subscription?.subscribedChannel?.avatar?.url}
@@ -43,26 +44,23 @@ function MySubscriptions() {
             key={subscription?.subscribedChannel?._id}
           >
             {subscription?.subscribedChannel?.latestVideo && (
-              <Link
-                to={`/watch/${subscription?.subscribedChannel?.latestVideo?._id}`}
+              <VideoList
                 key={subscription?.subscribedChannel?._id}
-              >
-                <VideoList
-                  avatar={subscription?.subscribedChannel?.avatar.url}
-                  duration={
-                    subscription?.subscribedChannel?.latestVideo?.duration
-                  }
-                  title={subscription?.subscribedChannel?.latestVideo?.title}
-                  thumbnail={
-                    subscription?.subscribedChannel?.latestVideo?.thumbnail?.url
-                  }
-                  createdAt={
-                    subscription?.subscribedChannel?.latestVideo?.createdAt
-                  }
-                  views={subscription?.subscribedChannel?.latestVideo?.views}
-                  channelName={subscription?.subscribedChannel?.username}
-                />
-              </Link>
+                avatar={subscription?.subscribedChannel?.avatar.url}
+                duration={
+                  subscription?.subscribedChannel?.latestVideo?.duration
+                }
+                title={subscription?.subscribedChannel?.latestVideo?.title}
+                thumbnail={
+                  subscription?.subscribedChannel?.latestVideo?.thumbnail?.url
+                }
+                createdAt={
+                  subscription?.subscribedChannel?.latestVideo?.createdAt
+                }
+                views={subscription?.subscribedChannel?.latestVideo?.views}
+                channelName={subscription?.subscribedChannel?.username}
+                videoId={subscription?.subscribedChannel?.latestVideo?._id}
+              />
             )}
           </Link>
         ))}

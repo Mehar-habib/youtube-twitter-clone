@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWatchHistory } from "../../store/slices/userSlice";
 import HomeSkeleton from "../../skeleton/HomeSkeleton";
-import { Link } from "react-router-dom";
 import { Container, NoVideosFound, VideoList } from "../index";
 
 function History() {
@@ -26,17 +25,17 @@ function History() {
         <Container>
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-2 ">
             {videos.map((video) => (
-              <Link to={`/watch/${video._id}`} key={video._id}>
-                <VideoList
-                  avatar={video.avatar?.url}
-                  duration={video.duration}
-                  title={video.title}
-                  thumbnail={video.thumbnail?.url}
-                  createdAt={video.createdAt}
-                  views={video.views}
-                  channelName={video.owner.username}
-                />
-              </Link>
+              <VideoList
+                key={video._id}
+                avatar={video.avatar?.url}
+                duration={video.duration}
+                title={video.title}
+                thumbnail={video.thumbnail?.url}
+                createdAt={video.createdAt}
+                views={video.views}
+                channelName={video.owner.username}
+                videoId={video._id}
+              />
             ))}
           </div>
         </Container>

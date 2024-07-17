@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   toggleCommentLike,
@@ -29,6 +29,11 @@ function Likes({ isLiked, likeCount = 0, commentId, tweetId, size, videoId }) {
       dispatch(toggleVideoLike(videoId));
     }
   };
+
+  useEffect(() => {
+    setLocalIsLiked(isLiked);
+    setLocalLikesCount(likeCount);
+  }, [isLiked, likeCount]);
 
   return (
     <>

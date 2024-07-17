@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getVideoById } from "../../store/slices/videoSlice";
 import { getVideoComments } from "../../store/slices/commentSlice";
-import { CommentList, TweetAndComment, Video } from "../index";
-import Description from "../Description";
+import { CommentList, TweetAndComment, Video, Description } from "../index";
 
 function VideoDetails() {
   const dispatch = useDispatch();
@@ -19,6 +18,7 @@ function VideoDetails() {
       dispatch(getVideoComments({ videoId }));
     }
   }, [dispatch, videoId]);
+  window.scrollTo(0, 0);
   return (
     <>
       <div>
