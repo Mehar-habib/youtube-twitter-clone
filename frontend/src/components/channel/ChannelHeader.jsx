@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../index.js";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSubscription } from "../../store/slices/subscriptionSlice.js";
@@ -22,6 +22,11 @@ function ChannelHeader({
   const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.user?.profileData?._id);
   const user = useSelector((state) => state.auth?.userData?._id);
+
+  useEffect(() => {
+    setLocalSubscribersCount(subscribersCount);
+    setLocalIsSubscribed(isSubscribed);
+  }, [subscribersCount, isSubscribed]);
 
   const handleSubscribe = () => {
     dispatch(toggleSubscription(channelId));

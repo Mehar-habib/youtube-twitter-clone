@@ -3,7 +3,7 @@ import "./App.css";
 import Layout from "./Layout";
 import HomePage from "./components/pages/HomePage";
 import { Toaster } from "react-hot-toast";
-import { Login, SignUp } from "./components";
+import { ChangePassword, EditPersonalInfo, Login, SignUp } from "./components";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getCurrentUser } from "./store/slices/authSlice";
@@ -37,7 +37,10 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/liked-videos" element={<LikedVideos />} />
           <Route path="/subscriptions" element={<MySubscriptions />} />
-          <Route path="/edit" element={<EditChannel />} />
+          <Route path="/edit" element={<EditChannel />}>
+            <Route path="personalInfo" element={<ChangePassword />} />
+            <Route path="personalInfo" element={<EditPersonalInfo />} />
+          </Route>
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />

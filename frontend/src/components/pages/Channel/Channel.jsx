@@ -16,6 +16,7 @@ function Channel() {
       dispatch(userChannelProfile(channel?.username));
     }
   }, [dispatch, channel]);
+  window.scrollTo(0, 0);
   return (
     <>
       {channel && (

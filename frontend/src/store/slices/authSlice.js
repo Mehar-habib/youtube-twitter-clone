@@ -79,7 +79,9 @@ export const getCurrentUser = createAsyncThunk("getCurrentUser", async () => {
 
 export const updateAvatar = createAsyncThunk("updateAvatar", async (avatar) => {
   try {
-    const response = await axiosInstance.patch("users/update-avatar", avatar);
+    const response = await axiosInstance.patch("users/update-avatar", {
+      avatar,
+    });
     toast.success("Avatar updated successfully");
     return response.data.data;
   } catch (error) {
@@ -92,12 +94,25 @@ export const updateCoverImg = createAsyncThunk(
   "updateCoverImg",
   async (coverImage) => {
     try {
-      const response = await axiosInstance.patch(
-        "users/update-cover-img",
-        coverImage
-      );
+      const response = await axiosInstance.patch("users/update-cover-img", {
+        coverImage,
+      });
       toast.success("Cover image updated successfully");
       return response.data.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+      throw error;
+    }
+  }
+);
+
+export const updateUserDetails = createAsyncThunk(
+  "updateUserDetails",
+  async (data) => {
+    try {
+      const response = await axiosInstance.patch("users/update-user", data);
+      toast.success("Updated details successfully");
+      return response.data;
     } catch (error) {
       toast.error(error.response?.data?.message);
       throw error;
@@ -164,6 +179,14 @@ const authSlice = createSlice({
     });
     builder.addCase(updateCoverImg.rejected, (state) => {
       state.loading = false;
+    });
+
+    builder.addCase(updateUserDetails.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateUserDetails.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userData = action.payload;
     });
   },
 });

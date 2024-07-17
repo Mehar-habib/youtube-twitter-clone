@@ -28,6 +28,8 @@ import EditVideo from "./EditVideo";
 import HeaderSection from "./dashboard/HeaderSection";
 import StatsSection from "./dashboard/StatsSection";
 import VideoTable from "./dashboard/VideoTable";
+import ChangePassword from "./ChangePassword";
+import EditPersonalInfo from "./EditPersonalInfo";
 
 export {
   Button,
@@ -60,4 +62,6 @@ export {
   HeaderSection,
   StatsSection,
   VideoTable,
+  ChangePassword,
+  EditPersonalInfo,
 };
