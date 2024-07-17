@@ -53,11 +53,8 @@ function AdminDashboard() {
       <Navbar />
       <Container>
         <div className="w-full relative h-screen space-y-5 z-10">
-          {popup.uploadVideo && (
-            <div className="absolute w-full z-20">
-              <UploadVideo setUploadVideoPopup={setPopup} />
-            </div>
-          )}
+          {/* upload video popup */}
+          {popup.uploadVideo && <UploadVideo setUploadVideoPopup={setPopup} />}
           {popup.editVideo && (
             <div className="w-full flex justify-center top-24 fixed z-20">
               <EditVideo
