@@ -56,7 +56,7 @@ function VideoTable({ videos, setPopUp, setVideoDetails }) {
                   <span className="flex gap-3 justify-start">
                     <ImBin
                       size={20}
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:text-purple-500"
                       onClick={() => {
                         setPopUp((prev) => ({
                           ...prev,
@@ -67,7 +67,7 @@ function VideoTable({ videos, setPopUp, setVideoDetails }) {
                     />
                     <GrEdit
                       size={20}
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:text-purple-500"
                       onClick={() => {
                         setPopUp((prev) => ({
                           ...prev,

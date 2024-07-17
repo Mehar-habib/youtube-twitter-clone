@@ -131,7 +131,7 @@ function TweetList({
             </div>
           )}
 
-          {/* deleteing the tweet */}
+          {/* deleting the tweet */}
           {editState.delete && (
             <div className="absolute z-50">
               <DeleteConfirmation

@@ -4,6 +4,8 @@ import { HiOutlineVideoCamera } from "react-icons/hi2";
 import {
   MdOutlineContactSupport,
   MdOutlineSlowMotionVideo,
+  MdOutlineCloudUpload,
+  MdClose,
 } from "react-icons/md";
 import { CiSettings } from "react-icons/ci";
 import { CiSearch } from "react-icons/ci";
@@ -47,4 +49,6 @@ export {
   TiTick,
   ImBin,
   GrEdit,
+  MdOutlineCloudUpload,
+  MdClose,
 };

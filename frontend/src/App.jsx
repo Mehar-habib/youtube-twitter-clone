@@ -16,6 +16,7 @@ import VideoDetails from "./components/pages/VideoDetails";
 import ChannelSubscribers from "./components/pages/Channel/ChannelSubscribers";
 import MySubscriptions from "./components/pages/MySubscriptions";
 import AdminDashboard from "./components/pages/AdminDashboard";
+import EditChannel from "./components/pages/EditChannel";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/liked-videos" element={<LikedVideos />} />
           <Route path="/subscriptions" element={<MySubscriptions />} />
+          <Route path="/edit" element={<EditChannel />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
