@@ -31,6 +31,8 @@ import VideoTable from "./dashboard/VideoTable";
 import ChangePassword from "./ChangePassword";
 import EditPersonalInfo from "./EditPersonalInfo";
 import EditAvatar from "./EditAvatar";
+import LoginPopup from "./LoginPopup";
+import AuthLayout from "./AuthLayout";
 
 export {
   Button,
@@ -66,4 +68,6 @@ export {
   ChangePassword,
   EditPersonalInfo,
   EditAvatar,
+  LoginPopup,
+  AuthLayout,
 };

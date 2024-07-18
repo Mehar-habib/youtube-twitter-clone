@@ -54,7 +54,7 @@ function AdminDashboard() {
     <>
       <Navbar />
       <Container>
-        <div className="w-full relative h-screen space-y-5 z-10">
+        <div className="w-full relative h-screen space-y-5 z-10 py-10 px-1">
           {/* upload video popup */}
           {popup.uploadVideo && <UploadVideo setUploadVideoPopup={setPopup} />}
           {popup.editVideo && (
