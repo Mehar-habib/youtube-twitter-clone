@@ -14,9 +14,9 @@ function TermsAndConditions() {
           </div>
           <h1 className="text-2xl font-bold mb-4">Terms and Conditions</h1>
           <div className="mb-4">
-            <ul className="list-disc list-inside text-sm">
+            <ul className="list-disc list-inside">
               <li className="mb-2">
-                This is a project to showcase my skill in web development.
+                This is project to showcase my skill in web development.
               </li>
               <li className="mb-2">This web app is still in development.</li>
               <li className="mb-2">
@@ -24,6 +24,15 @@ function TermsAndConditions() {
               </li>
               <li className="mb-2">
                 Don&apos;t upload images greater then 10 MB.
+              </li>
+              <li className="mb-2">
+                It may take more than 30 seconds to load initial.
+              </li>
+              <li className="mb-2">
+                as backend is deployed on a free service.
+              </li>
+              <li className="mb-2">
+                Upload no explicit content meant to be emotionally gratifying.
               </li>
             </ul>
           </div>
