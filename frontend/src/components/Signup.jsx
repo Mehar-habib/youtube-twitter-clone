@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { createAccount } from "../store/slices/authSlice.js";
+import { createAccount, userLogin } from "../store/slices/authSlice.js";
 import { Button, Input, Logo } from "./index.js";
+import HomeSkeleton from "../skeleton/HomeSkeleton.jsx";
 
 function Signup() {
   const {
@@ -12,11 +13,25 @@ function Signup() {
   } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth?.loading);
 
   const submit = async (data) => {
-    dispatch(createAccount(data));
-    navigate("/login");
+    const response = await dispatch(createAccount(data));
+    if (response?.payload?.success) {
+      const username = data?.username;
+      const password = data?.password;
+      const loginResult = await dispatch(userLogin({ username, password }));
+      if (loginResult?.type === "login/fulfilled") {
+        navigate("/terms&condition");
+      } else {
+        navigate("/login");
+      }
+    }
   };
+
+  if (loading) {
+    return <HomeSkeleton />;
+  }
   return (
     <>
       <div className="w-full h-screen p-3 flex justify-center items-start sm:mt-6">
@@ -29,42 +44,42 @@ function Signup() {
               label="username"
               type="text"
               placeholder=""
-              {...register("username", { required: true })}
+              {...register("username", { required: "username is required" })}
             />
-            {errors.username && <span>{errors.username.message}</span>}
+            {<span className="text-red-500">{errors.username.message}</span>}
 
             <Input
               label="email"
               type="email"
               placeholder=""
-              {...register("email", { required: true })}
+              {...register("email", { required: "email is required" })}
             />
-            {errors.email && <span>{errors.email.message}</span>}
+            {<span className="text-red-500">{errors.email.message}</span>}
 
             <Input
               label="FullName"
               type="text"
               placeholder=""
-              {...register("fullName", { required: true })}
+              {...register("fullName", { required: "fullName is required" })}
             />
-            {errors.fullName && <span>{errors.fullName.message}</span>}
+            {<span className="text-red-500">{errors.fullName.message}</span>}
 
             <Input
               label="Password"
               type="password"
               placeholder=""
-              {...register("password", { required: true })}
+              {...register("password", { required: "password is required" })}
             />
-            {errors.password && <span>{errors.password.message}</span>}
+            {<span className="text-red-500">{errors.password.message}</span>}
 
             <Input
               label="Profile Picture"
               type="file"
               placeholder=""
-              {...register("avatar", { required: true })}
+              {...register("avatar", { required: "avatar is required" })}
               accept="image/png, image/jpeg"
             />
-            {errors.avatar && <span>{errors.avatar.message}</span>}
+            {<span className="text-red-500">{errors.avatar.message}</span>}
 
             <Button
               type="submit"

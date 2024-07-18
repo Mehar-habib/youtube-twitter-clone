@@ -25,6 +25,7 @@ import {
   AdminDashboard,
   EditChannel,
   SearchVideos,
+  TermsAndConditions,
 } from "./components/pages/index";
 
 function App() {
@@ -165,6 +166,14 @@ function App() {
           element={
             <AuthLayout authentication>
               <AdminDashboard />
+            </AuthLayout>
+          }
+        />
+        <Route
+          path="/terms&condition"
+          element={
+            <AuthLayout authentication>
+              <TermsAndConditions />
             </AuthLayout>
           }
         />

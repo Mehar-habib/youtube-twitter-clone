@@ -42,17 +42,17 @@ function Login() {
               label="username / email"
               type="text"
               placeholder="example@gmail.com"
-              {...register("username", { required: true })}
+              {...register("username", { required: "username is required" })}
             />
-            {errors.username && <span>{errors.username.message}</span>}
+            {<span className="text-red-500">{errors.username.message}</span>}
 
             <Input
               label="Password"
               type="password"
               placeholder="1@2@3#4$5"
-              {...register("password", { required: true })}
+              {...register("password", { required: "password is required" })}
             />
-            {errors.password && <span>{errors.password.message}</span>}
+            {<span>{errors.password.message}</span>}
 
             <Button
               type="submit"
