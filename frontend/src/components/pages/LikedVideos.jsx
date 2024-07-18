@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLikedVideos } from "../../store/slices/likeSlice";
 import HomeSkeleton from "../../skeleton/HomeSkeleton";
 import { Container, NoVideosFound, VideoList } from "../index";
+import { makeVideosNull } from "../../store/slices/videoSlice";
 
 function LikedVideos() {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ function LikedVideos() {
 
   useEffect(() => {
     dispatch(getLikedVideos());
+    return () => dispatch(makeVideosNull());
   }, [dispatch]);
   if (loading) {
     return <HomeSkeleton />;
@@ -22,7 +24,7 @@ function LikedVideos() {
   return (
     <>
       <Container>
-        <div className="grid lg:grid-cols-3 sm:grid-cols-2 mb-20 sm:mb-20">
+        <div className="grid h-screen overflow-y-scroll lg:grid-cols-3 sm:grid-cols-2 mb-20 sm:mb-20">
           {LikedVideos?.map((video) => (
             <VideoList
               key={video.LikedVideos._id}

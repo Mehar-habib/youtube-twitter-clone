@@ -18,6 +18,7 @@ import {
   MySubscriptions,
   AdminDashboard,
   EditChannel,
+  SearchVideos,
 } from "./components/pages/index";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="" element={<HomePage />} />
+          <Route path="/search/:query" element={<SearchVideos />} />
           <Route path="/channel/:username" element={<Channel />}>
             <Route path="videos" element={<ChannelVideos />} />
             <Route path="playlists" element="" />

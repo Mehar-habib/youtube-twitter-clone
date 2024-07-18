@@ -1,5 +1,5 @@
 function Container({ children }) {
-  return <div className="w-full sm:px-5 px-1 sm:pt-5 mt-2">{children}</div>;
+  return <div className="w-full sm:pt-5">{children}</div>;
 }
 
 export default Container;

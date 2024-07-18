@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Container from "../Container";
 import { useEffect } from "react";
-import { getAllVideos } from "../../store/slices/videoSlice";
+import { getAllVideos, makeVideosNull } from "../../store/slices/videoSlice";
 import VideoList from "../VideoList";
 import HomeSkeleton from "../../skeleton/HomeSkeleton";
 
@@ -11,7 +11,9 @@ function HomePage() {
   const loading = useSelector((state) => state.video?.loading);
 
   useEffect(() => {
-    dispatch(getAllVideos());
+    dispatch(getAllVideos({}));
+
+    return () => dispatch(makeVideosNull());
   }, [dispatch]);
 
   if (loading) {

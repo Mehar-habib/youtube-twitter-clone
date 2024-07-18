@@ -14,7 +14,7 @@ const initialState = {
 
 export const getAllVideos = createAsyncThunk(
   "getAllVideos",
-  async (userId, sortBy, sortType, query, page, limit) => {
+  async ({ userId, sortBy, sortType, query, page, limit }) => {
     try {
       const url = new URL(`${BASE_URL}/video`);
 
@@ -124,6 +124,9 @@ const videSlice = createSlice({
       state.uploading = false;
       state.uploaded = false;
     },
+    makeVideosNull: (state) => {
+      state.videos = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -169,5 +172,5 @@ const videSlice = createSlice({
     });
   },
 });
-export const { updateUploadState } = videSlice.actions;
+export const { updateUploadState, makeVideosNull } = videSlice.actions;
 export default videSlice.reducer;
