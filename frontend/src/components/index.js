@@ -34,6 +34,7 @@ import EditAvatar from "./EditAvatar";
 import LoginPopup from "./LoginPopup";
 import AuthLayout from "./AuthLayout";
 import InfiniteScroll from "./InfiniteScroll";
+import SearchForSmallScreen from "./SearchForSmallScreen";
 
 export {
   Button,
@@ -72,4 +73,5 @@ export {
   LoginPopup,
   AuthLayout,
   InfiniteScroll,
+  SearchForSmallScreen,
 };

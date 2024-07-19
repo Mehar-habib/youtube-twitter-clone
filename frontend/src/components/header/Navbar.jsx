@@ -9,7 +9,7 @@ import {
   MdOutlineContactSupport,
   SlMenu,
 } from "../icons.js";
-import { Button, Logo, Search } from "../index.js";
+import { Button, Logo, Search, SearchForSmallScreen } from "../index.js";
 import { Link, NavLink } from "react-router-dom";
 
 function Navbar() {
@@ -55,7 +55,8 @@ function Navbar() {
         </div>
         {/* search for small screen */}
         <div className="w-full inline-flex justify-end sm:hidden pr-4">
-          <CiSearch size={30} fontWeight={"bold"} />+
+          <CiSearch size={30} fontWeight={"bold"} />
+          <SearchForSmallScreen />
         </div>
         {/* login and sign up buttons */}
         {authStatus ? (
