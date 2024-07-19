@@ -1,20 +1,27 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NoVideosFound, VideoList } from "../index";
 import HomeSkeleton from "../../skeleton/HomeSkeleton";
+import { useEffect } from "react";
+import { makeVideosNull } from "../../store/slices/videoSlice";
 
 function SearchVideos() {
   const loading = useSelector((state) => state.video?.loading);
   const videos = useSelector((state) => state.video?.videos);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => dispatch(makeVideosNull());
+  }, [dispatch]);
 
   if (videos?.totalDocs === 0) {
-    return <NoVideosFound />;
+    return <NoVideosFound text={"try searching something else"} />;
   }
   if (loading) {
     return <HomeSkeleton />;
   }
   return (
     <>
-      <div className="grid grid-cols-3">
+      <div className="grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1">
         {videos &&
           videos?.docs?.map((video) => (
             <VideoList

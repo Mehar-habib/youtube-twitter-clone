@@ -13,6 +13,7 @@ import {
   Description,
   InfiniteScroll,
   Spinner,
+  Navbar,
 } from "../index";
 
 function VideoDetails() {
@@ -41,10 +42,8 @@ function VideoDetails() {
   }, [dispatch, hasNextPage, loading, videoId, page]);
   return (
     <>
-      <div>
-        <Video src={video.videoFile?.url} poster={video.thumbnail?.url} />
-      </div>
-
+      <Navbar />
+      <Video src={video.videoFile?.url} poster={video.thumbnail?.url} />
       <Description
         avatar={video?.owner?.avatar?.url}
         channelName={video?.owner?.username}

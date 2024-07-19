@@ -16,7 +16,7 @@ function HomeSkeleton() {
     skeletonItems.push(<SkeletonItem key={i} />);
   }
   return (
-    <div className="w-full grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 p-5">
+    <div className="w-full grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
       {skeletonItems}
     </div>
   );

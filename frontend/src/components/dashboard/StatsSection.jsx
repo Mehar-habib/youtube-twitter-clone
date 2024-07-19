@@ -15,7 +15,7 @@ function StatsSection({ dashboard }) {
             size={30}
           />
           <p>Total Videos</p>
-          <span className="font-bold text-2xl">{dashboard?.totalLikes}</span>
+          <span className="font-bold text-2xl">{dashboard?.totalVideos}</span>
         </div>
         <div className="border border-slate-500 sm:p-3 p-2">
           <FaRegEye className="text-purple-500 mb-2" size={30} />
