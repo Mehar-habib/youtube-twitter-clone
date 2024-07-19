@@ -5,7 +5,10 @@ import { BASE_URL } from "../../constants";
 
 const initialState = {
   loading: false,
-  videos: null,
+  videos: {
+    docs: [],
+    hasNextPage: false,
+  },
   uploading: true,
   uploaded: false,
   video: null,
@@ -125,7 +128,7 @@ const videSlice = createSlice({
       state.uploaded = false;
     },
     makeVideosNull: (state) => {
-      state.videos = null;
+      state.videos.docs = [];
     },
   },
 
@@ -136,7 +139,8 @@ const videSlice = createSlice({
 
     builder.addCase(getAllVideos.fulfilled, (state, action) => {
       state.loading = false;
-      state.videos = action.payload;
+      state.videos = { ...state.videos.docs, ...action.payload.docs };
+      state.videos.hasNextPage = action.payload.hasNextPage;
     });
 
     builder.addCase(publishAVideo.pending, (state) => {

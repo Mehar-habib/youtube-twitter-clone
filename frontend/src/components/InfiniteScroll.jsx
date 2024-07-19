@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function InfiniteScroll({ children, fetchMore, hasNextPage }) {
   const loader = useRef(null);

@@ -33,6 +33,7 @@ import EditPersonalInfo from "./EditPersonalInfo";
 import EditAvatar from "./EditAvatar";
 import LoginPopup from "./LoginPopup";
 import AuthLayout from "./AuthLayout";
+import InfiniteScroll from "./InfiniteScroll";
 
 export {
   Button,
@@ -70,4 +71,5 @@ export {
   EditAvatar,
   LoginPopup,
   AuthLayout,
+  InfiniteScroll,
 };

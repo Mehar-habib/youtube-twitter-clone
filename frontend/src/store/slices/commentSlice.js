@@ -73,7 +73,11 @@ export const getVideoComments = createAsyncThunk(
 const commentSlice = createSlice({
   name: "comment",
   initialState,
-  reducers: {},
+  reducers: {
+    cleanUpComments: (state) => {
+      state.comments = [];
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getVideoComments.pending, (state) => {
@@ -81,7 +85,7 @@ const commentSlice = createSlice({
     });
     builder.addCase(getVideoComments.fulfilled, (state, action) => {
       state.loading = false;
-      state.comments = action.payload.docs;
+      state.comments = { ...state.comments, ...action.payload.docs };
       state.totalComments = action.payload.totalDocs;
       state.hasNextPage = action.payload.hasNextPage;
     });
@@ -97,5 +101,7 @@ const commentSlice = createSlice({
     });
   },
 });
+
+export const { cleanUpComments } = commentSlice.actions;
 
 export default commentSlice.reducer;

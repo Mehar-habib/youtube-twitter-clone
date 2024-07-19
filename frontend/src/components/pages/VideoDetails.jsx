@@ -1,9 +1,19 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getVideoById } from "../../store/slices/videoSlice";
-import { getVideoComments } from "../../store/slices/commentSlice";
-import { CommentList, TweetAndComment, Video, Description } from "../index";
+import {
+  cleanUpComments,
+  getVideoComments,
+} from "../../store/slices/commentSlice";
+import {
+  CommentList,
+  TweetAndComment,
+  Video,
+  Description,
+  InfiniteScroll,
+  Spinner,
+} from "../index";
 
 function VideoDetails() {
   const dispatch = useDispatch();
@@ -11,14 +21,24 @@ function VideoDetails() {
   const video = useSelector((state) => state.video?.video);
   const comments = useSelector((state) => state.comment?.comments);
   const totalComments = useSelector((state) => state.comment?.totalComments);
+  const hasNextPage = useSelector((state) => state.comment?.hasNextPage);
+  const loading = useSelector((state) => state.comment?.loading);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     if (videoId) {
       dispatch(getVideoById({ videoId }));
       dispatch(getVideoComments({ videoId }));
     }
+    return () => dispatch(cleanUpComments());
   }, [dispatch, videoId]);
-  window.scrollTo(0, 0);
+
+  const fetchMoreComments = useCallback(() => {
+    if (!loading && hasNextPage) {
+      dispatch(getVideoComments({ videoId, page: page + 1 }));
+      setPage((page) => page + 1);
+    }
+  }, [dispatch, hasNextPage, loading, videoId, page]);
   return (
     <>
       <div>
@@ -44,21 +64,29 @@ function VideoDetails() {
         {totalComments} Comments
       </div>
       <TweetAndComment comment={true} videoId={video?._id} />
-      <div className="w-full sm:max-w-4xl">
-        {comments.map((comment) => (
-          <CommentList
-            key={comment._id}
-            avatar={comment?.owner?.avatar?.url}
-            commentId={comment._id}
-            content={comment?.content}
-            createdAt={comment?.createdAt}
-            fullName={comment?.owner?.fullName}
-            isLiked={comment?.isLiked}
-            likesCount={comment?.likesCount}
-            username={comment?.owner?.username}
-          />
-        ))}
-      </div>
+
+      <InfiniteScroll fetchMore={fetchMoreComments} hasNextPage={hasNextPage}>
+        <div className="w-full sm:max-w-4xl">
+          {comments.map((comment) => (
+            <CommentList
+              key={comment._id}
+              avatar={comment?.owner?.avatar?.url}
+              commentId={comment._id}
+              content={comment?.content}
+              createdAt={comment?.createdAt}
+              fullName={comment?.owner?.fullName}
+              isLiked={comment?.isLiked}
+              likesCount={comment?.likesCount}
+              username={comment?.owner?.username}
+            />
+          ))}
+          {loading && (
+            <div className="w-full flex justify-center items-center">
+              <Spinner width={10} />
+            </div>
+          )}
+        </div>
+      </InfiniteScroll>
     </>
   );
 }
