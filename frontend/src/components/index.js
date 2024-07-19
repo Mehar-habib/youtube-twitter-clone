@@ -35,6 +35,7 @@ import LoginPopup from "./LoginPopup";
 import AuthLayout from "./AuthLayout";
 import InfiniteScroll from "./InfiniteScroll";
 import SearchForSmallScreen from "./SearchForSmallScreen";
+import ChannelPlaylist from "./ChannelPlaylist";
 
 export {
   Button,
@@ -74,4 +75,5 @@ export {
   AuthLayout,
   InfiniteScroll,
   SearchForSmallScreen,
+  ChannelPlaylist,
 };

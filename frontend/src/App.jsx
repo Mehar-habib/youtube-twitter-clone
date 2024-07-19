@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import {
   AuthLayout,
   ChangePassword,
+  ChannelPlaylist,
   EditPersonalInfo,
   Login,
   SignUp,
@@ -69,7 +70,14 @@ function App() {
                 </AuthLayout>
               }
             />
-            <Route path="playlists" element="" />
+            <Route
+              path="playlists"
+              element={
+                <AuthLayout authentication>
+                  <ChannelPlaylist />
+                </AuthLayout>
+              }
+            />
             <Route
               path="tweets"
               element={

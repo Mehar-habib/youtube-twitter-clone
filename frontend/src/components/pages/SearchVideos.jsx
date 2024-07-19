@@ -20,6 +20,7 @@ function SearchVideos() {
     const sortType = searchParams.get("sortType");
     const sortBy = searchParams.get("sortBy");
     dispatch(getAllVideos({ query, sortBy, sortType }));
+    setFilterOpen(false);
     return () => dispatch(makeVideosNull());
   }, [dispatch, query, searchParams]);
 
