@@ -15,6 +15,9 @@ export const createAccount = createAsyncThunk("user/register", async (data) => {
   formData.append("fullName", data.fullName);
   formData.append("password", data.password);
   formData.append("avatar", data.avatar[0]);
+  if (data.coverImage) {
+    formData.append("coverImage", data.coverImage[0]);
+  }
   try {
     const res = await axiosInstance.post("users/register", formData);
     toast.success("registered successfully");

@@ -23,15 +23,6 @@ function TermsAndConditions() {
                 Don&apos;t upload videos greater then 100 MB.
               </li>
               <li className="mb-2">
-                Don&apos;t upload images greater then 10 MB.
-              </li>
-              <li className="mb-2">
-                It may take more than 30 seconds to load initial.
-              </li>
-              <li className="mb-2">
-                as backend is deployed on a free service.
-              </li>
-              <li className="mb-2">
                 Upload no explicit content meant to be emotionally gratifying.
               </li>
             </ul>
@@ -45,7 +36,7 @@ function TermsAndConditions() {
               onChange={() => setIsChecked(!isChecked)}
               className="mr-2 transform scale-125"
             />
-            <label htmlFor="termsCheckbox">
+            <label htmlFor="termsCheckbox" className="font-bold">
               I agree to the terms and conditions
             </label>
           </div>

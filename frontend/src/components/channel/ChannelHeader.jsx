@@ -83,7 +83,7 @@ function ChannelHeader({
                   subscribers
                 </p>
                 <p className="text-xs text-slate-400">
-                  {subscribedCount && `${subscribedCount}`} subscribed
+                  {subscribedCount && subscribedCount} subscribed
                 </p>
               </div>
             </div>
